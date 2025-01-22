@@ -1,0 +1,12 @@
+name = "tenants-admin-web-platform"
+compatibility_date = "2025-01-19"
+pages_build_output_dir = "./dist"
+compatibility_flags = [ "nodejs_compat" ]
+
+[env.development.vars]
+ASTRO_DB_REMOTE_URL = "libsql://tenants-db-cecildt.turso.io"
+NODE_VERSION = "22.13.0"
+
+[env.production.vars]
+ASTRO_DB_REMOTE_URL = "libsql://tenants-db-cecildt.turso.io"
+NODE_VERSION = "22.13.0"

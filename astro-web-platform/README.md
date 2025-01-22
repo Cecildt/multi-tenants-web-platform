@@ -45,3 +45,33 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🚀 Deploy to Cloudflare
+
+Install Wrangler CLI
+
+```sh
+npm install -g wrangler
+```
+
+Login to Cloudflare
+
+```sh
+wrangler login
+```
+
+Run your build command
+
+```sh
+npm run build
+```
+
+Deploy your site
+
+```sh
+npx wrangler pages deploy dist
+```
