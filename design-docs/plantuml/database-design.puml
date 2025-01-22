@@ -1,0 +1,96 @@
+@startuml database-design
+class Tenants {
+    + id: UUID
+    + name: String
+    + business_name: String
+    + email: String
+    + created_at: Date
+    + updated_at: Date
+}
+
+class Products {
+    + id: UUID
+    + name: String
+    + url: String
+    + created_at: Date
+    + updated_at: Date
+}
+
+class TenantsProducts {
+    + tenant_id: UUID
+    + product_id: UUID
+    + created_at: Date
+    + updated_at: Date
+}
+
+class Tiers {
+    + id: UUID
+    + tenant_id: UUID
+    + product_id: UUID
+    + name: String
+    + price: Double
+    + created_at: Date
+    + updated_at: Date
+}
+
+class Users {
+    + id: UUID
+    + name: String
+    + email: String
+    + password: String
+    + created_at: Date
+    + updated_at: Date
+}
+
+class TenantsUsers {
+    + user_id: UUID
+    + tenant_id: UUID
+    + created_at: Date
+    + updated_at: Date
+}
+
+class Analytics {
+    + id: UUID
+    + tenant_id: UUID
+    + product_id: UUID
+    + name: String
+    + value: JSON
+    + created_at: Date
+    + updated_at: Date
+}
+
+class Finances {
+    + id: UUID
+    + tenant_id: UUID
+    + product_id: UUID
+    + tier_id: UUID
+    + yearly_charge: Boolean
+    + billing_date: Date
+    + created_at: Date
+    + updated_at: Date
+}
+
+class BillingHistory {
+    + id: UUID
+    + tenant_id: UUID
+    + product_id: UUID
+    + tier_id: UUID
+    + month: Date
+    + user_count: Number
+    + amount: Double
+    + billing_date: Date
+    + created_at: Date
+    + updated_at: Date
+}
+
+Tenants "1" -- "*" TenantsProducts
+Products "1" -- "*" TenantsProducts
+Products "1" -- "*" Tiers
+Tenants "1" -- "*" TenantsUsers
+Users "1" -- "*" TenantsUsers
+Tenants "1" -- "*" Analytics
+Tenants "1" -- "1" Finances
+Tenants "1" -- "*" BillingHistory
+Products "1" -- "*" BillingHistory
+Tiers "1" -- "*" BillingHistory
+@enduml
