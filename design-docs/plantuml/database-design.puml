@@ -35,9 +35,11 @@ class Tiers {
 
 class Users {
     + id: UUID
-    + name: String
+    + login_id: String
+    + first_name: String
+    + last_name: String
+    + display_name: String
     + email: String
-    + password: String
     + created_at: Date
     + updated_at: Date
 }
