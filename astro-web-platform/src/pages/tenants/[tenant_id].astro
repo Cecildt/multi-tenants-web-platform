@@ -1,5 +1,8 @@
 ---
-import NavBar from '../components/NavBar.astro'
+import TenantEditForm from "../../components/forms/TenantEditForm.astro";
+import NavBar from "../../components/menus/NavBar.astro";
+
+const { tenant_id } = Astro.params;
 ---
 
 <html lang="en">
@@ -11,22 +14,12 @@ import NavBar from '../components/NavBar.astro'
     <title>Tenants Admin Platform</title>
   </head>
   <body class="base-200">
-    <NavBar title="Finances" />
+    <NavBar title="Tenants" />
     <div class="flex">
       <div class="size-14 flex-none"></div>
       <div class="size-32 grow">
-        <div class="flex-row">
-          <ul
-            class="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box"
-          >
-            <li><a>Action A</a></li>
-            <li><a>Filters</a></li>
-            <li><a>Item 3</a></li>
-          </ul>
-        </div>
-        <div class="flex-row">
-          Finances - Coming Soon
-        </div>
+        <h3 class="text-lg font-bold">Edit Tenant</h3>
+        <TenantEditForm tenant_id={tenant_id} business_name="test" tenant_name="test-123" email="test@test.com" />
       </div>
       <div class="size-14 flex-none"></div>
     </div>

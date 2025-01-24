@@ -12,7 +12,8 @@
   "dependencies": {
     "@astrojs/cloudflare": "^12.2.1",
     "@astrojs/tailwind": "^5.1.5",
-    "astro": "5.1.9"
+    "astro": "5.1.9",
+    "nanoid": "^5.0.9"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",

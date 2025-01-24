@@ -1,11 +1,15 @@
 ---
 import { actions, isInputError,  } from "astro:actions";
 
+const { tenant_id, business_name, tenant_name, email } = Astro.props;
+
 const result = Astro.getActionResult(actions.tenants.addTenant);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
-<form method="POST" action={actions.tenants.addTenant} class="mb-8">      
+<form method="POST" action={actions.tenants.editTenant} class="mb-8">    
+    <input type="text" name="tenant_id" value={tenant_id} hidden />
+    
     <div class="mb-4">
       <label for="name">Business Name:</label>
       <input
@@ -14,6 +18,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         name="business_name"
         required
         class="w-full p-2 border rounded"
+        value={business_name}
       />
       {inputErrors.business_name &&
       <p class="text-red-500">{inputErrors.business_name}</p>
@@ -27,6 +32,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
           name="tenant_name"
           required
           class="w-full p-2 border rounded"
+          value={tenant_name}
         />
         {inputErrors.tenant_name &&
         <p class="text-red-500">{inputErrors.tenant_name}</p>
@@ -41,6 +47,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         name="email"
         required
         class="w-full p-2 border rounded"
+        value={email}
       />
       {inputErrors.email &&
       <p class="text-red-500">{inputErrors.email}</p>
@@ -48,6 +55,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
     </div>
     
     <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded">
-      Add Tenant
+      Save Tenant
     </button>
+    <a href="/" class="btn btn-ghost rounded">Cancel</a>
   </form>

@@ -1,5 +1,6 @@
 ---
-import NavBar from '../components/NavBar.astro'
+import NavBar from '../../components/menus/NavBar.astro'
+import UsersGrid from '../../components/grids/UsersGrid.astro'
 ---
 
 <html lang="en">
@@ -11,7 +12,7 @@ import NavBar from '../components/NavBar.astro'
     <title>Tenants Admin Platform</title>
   </head>
   <body class="base-200">
-    <NavBar title="Analytics" />
+    <NavBar title="Users" />
     <div class="flex">
       <div class="size-14 flex-none"></div>
       <div class="size-32 grow">
@@ -19,13 +20,13 @@ import NavBar from '../components/NavBar.astro'
           <ul
             class="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box"
           >
-            <li><a>View A</a></li>
-            <li><a>Filters</a></li>
-            <li><a>Item 3</a></li>
+            <li><a>Add User</a></li>
+            <li><a>Order By</a></li>
+            <li><a>Filter By</a></li>
           </ul>
         </div>
         <div class="flex-row">
-          Analytics - Coming Soon
+          <UsersGrid />
         </div>
       </div>
       <div class="size-14 flex-none"></div>

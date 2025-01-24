@@ -1,0 +1,25 @@
+---
+import TenantAddForm from "../../components/forms/TenantAddForm.astro";
+import NavBar from "../../components/menus/NavBar.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Tenants Admin Platform</title>
+  </head>
+  <body class="base-200">
+    <NavBar title="Tenants" />
+    <div class="flex">
+      <div class="size-14 flex-none"></div>
+      <div class="size-32 grow">
+        <h3 class="text-lg font-bold">Create Tenant</h3>
+        <TenantAddForm />
+      </div>
+      <div class="size-14 flex-none"></div>
+    </div>
+  </body>
+</html>
