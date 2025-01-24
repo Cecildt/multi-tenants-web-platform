@@ -1,6 +1,7 @@
 ---
-import NavBar from "../components/NavBar.astro";
-import TenantsGrid from "../components/TenantsGrid.astro";
+import NavBar from "../components/menus/NavBar.astro";
+import TenantsGrid from "../components/grids/TenantsGrid.astro";
+import TenantAddDialog from "../components/dialogs/TenantAddDialog.astro";
 ---
 
 <html lang="en">
@@ -20,7 +21,7 @@ import TenantsGrid from "../components/TenantsGrid.astro";
           <ul
             class="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box"
           >
-            <li><a>Add Tenant</a></li>
+            <li><a href="/tenant-add">Add Tenant</a></li>
             <li><a>Order By</a></li>
             <li><a>Filter By</a></li>
           </ul>
@@ -29,7 +30,8 @@ import TenantsGrid from "../components/TenantsGrid.astro";
           <TenantsGrid />
         </div>
       </div>
-      <div class="size-14 flex-none"></div>
     </div>
+    <!-- Dialogs -->
+    <TenantAddDialog />
   </body>
 </html>

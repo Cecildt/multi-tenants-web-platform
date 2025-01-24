@@ -1,6 +1,6 @@
 ---
-import NavBar from '../components/menus/NavBar.astro'
-import UsersGrid from '../components/grids/UsersGrid.astro'
+import TenantForm from "../components/forms/TenantForm.astro";
+import NavBar from "../components/menus/NavBar.astro";
 ---
 
 <html lang="en">
@@ -12,22 +12,12 @@ import UsersGrid from '../components/grids/UsersGrid.astro'
     <title>Tenants Admin Platform</title>
   </head>
   <body class="base-200">
-    <NavBar title="Users" />
+    <NavBar title="Tenants" />
     <div class="flex">
       <div class="size-14 flex-none"></div>
       <div class="size-32 grow">
-        <div class="flex-row">
-          <ul
-            class="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box"
-          >
-            <li><a>Add User</a></li>
-            <li><a>Order By</a></li>
-            <li><a>Filter By</a></li>
-          </ul>
-        </div>
-        <div class="flex-row">
-          <UsersGrid />
-        </div>
+        <h3 class="text-lg font-bold">Add Tenant</h3>
+        <TenantForm />
       </div>
       <div class="size-14 flex-none"></div>
     </div>

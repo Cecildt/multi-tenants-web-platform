@@ -1,7 +1,7 @@
 @startuml database-design
 class Tenants {
-    + id: UUID
-    + name: String
+    + id: NanoID
+    + tenant_name: String
     + business_name: String
     + email: String
     + created_at: Date
@@ -9,7 +9,7 @@ class Tenants {
 }
 
 class Products {
-    + id: UUID
+    + id: NanoID
     + name: String
     + url: String
     + created_at: Date
@@ -17,16 +17,16 @@ class Products {
 }
 
 class TenantsProducts {
-    + tenant_id: UUID
-    + product_id: UUID
+    + tenant_id: NanoID
+    + product_id: NanoID
     + created_at: Date
     + updated_at: Date
 }
 
 class Tiers {
-    + id: UUID
-    + tenant_id: UUID
-    + product_id: UUID
+    + id: NanoID
+    + tenant_id: NanoID
+    + product_id: NanoID
     + name: String
     + price: Double
     + created_at: Date
@@ -34,7 +34,7 @@ class Tiers {
 }
 
 class Users {
-    + id: UUID
+    + id: NanoID
     + login_id: String
     + first_name: String
     + last_name: String
@@ -45,16 +45,16 @@ class Users {
 }
 
 class TenantsUsers {
-    + user_id: UUID
-    + tenant_id: UUID
+    + user_id: NanoID
+    + tenant_id: NanoID
     + created_at: Date
     + updated_at: Date
 }
 
 class Analytics {
-    + id: UUID
-    + tenant_id: UUID
-    + product_id: UUID
+    + id: NanoID
+    + tenant_id: NanoID
+    + product_id: NanoID
     + name: String
     + value: JSON
     + created_at: Date
@@ -62,10 +62,10 @@ class Analytics {
 }
 
 class Finances {
-    + id: UUID
-    + tenant_id: UUID
-    + product_id: UUID
-    + tier_id: UUID
+    + id: NanoID
+    + tenant_id: NanoID
+    + product_id: NanoID
+    + tier_id: NanoID
     + yearly_charge: Boolean
     + billing_date: Date
     + created_at: Date
@@ -73,10 +73,10 @@ class Finances {
 }
 
 class BillingHistory {
-    + id: UUID
-    + tenant_id: UUID
-    + product_id: UUID
-    + tier_id: UUID
+    + id: NanoID
+    + tenant_id: NanoID
+    + product_id: NanoID
+    + tier_id: NanoID
     + month: Date
     + user_count: Number
     + amount: Double
