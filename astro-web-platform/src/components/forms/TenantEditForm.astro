@@ -5,9 +5,18 @@ const { tenant_id, business_name, tenant_name, email } = Astro.props;
 
 const result = Astro.getActionResult(actions.tenants.addTenant);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+
+if (result && !result.error) {
+  console.log("Redirecting to tenant page");
+  return Astro.redirect("/products");
+} else {
+  console.log("No redirect");
+  console.log(inputErrors);
+}
+
 ---
 
-<form method="POST" action={actions.tenants.editTenant} class="mb-8">    
+<form id="tenantEditForm" method="POST" action={actions.tenants.editTenant} class="mb-8">    
     <input type="text" name="tenant_id" value={tenant_id} hidden />
     
     <div class="mb-4">
