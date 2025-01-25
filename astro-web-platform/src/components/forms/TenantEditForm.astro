@@ -3,7 +3,7 @@ import { actions, isInputError } from "astro:actions";
 
 const { tenant_id, business_name, tenant_name, email } = Astro.props;
 
-const result = Astro.getActionResult(actions.tenants.addTenant);
+const result = Astro.getActionResult(actions.tenants.editTenant);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
