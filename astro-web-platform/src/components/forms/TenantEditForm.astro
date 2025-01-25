@@ -1,70 +1,70 @@
 ---
-import { actions, isInputError,  } from "astro:actions";
+import { actions, isInputError } from "astro:actions";
 
 const { tenant_id, business_name, tenant_name, email } = Astro.props;
 
 const result = Astro.getActionResult(actions.tenants.addTenant);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
-
-if (result && !result.error) {
-  console.log("Redirecting to tenant page");
-  return Astro.redirect("/products");
-} else {
-  console.log("No redirect");
-  console.log(inputErrors);
-}
-
 ---
 
-<form id="tenantEditForm" method="POST" action={actions.tenants.editTenant} class="mb-8">    
-    <input type="text" name="tenant_id" value={tenant_id} hidden />
-    
-    <div class="mb-4">
-      <label for="name">Business Name:</label>
-      <input
-        type="text"
-        id="business_name"
-        name="business_name"
-        required
-        class="w-full p-2 border rounded"
-        value={business_name}
-      />
-      {inputErrors.business_name &&
-      <p class="text-red-500">{inputErrors.business_name}</p>
-      }
-    </div>
-    <div class="mb-4">
-        <label for="name">Tenant Name:</label>
-        <input
-          type="text"
-          id="tenant_name"
-          name="tenant_name"
-          required
-          class="w-full p-2 border rounded"
-          value={tenant_name}
-        />
-        {inputErrors.tenant_name &&
+<form
+  id="tenantEditForm"
+  method="POST"
+  action={actions.tenants.editTenant}
+  class="mb-8"
+>
+  <input type="text" name="tenant_id" value={tenant_id} hidden />
+
+  <div class="mb-4">
+    <label for="name">Business Name:</label>
+    <input
+      type="text"
+      id="business_name"
+      name="business_name"
+      required
+      minlength="3"
+      class="w-full p-2 border rounded"
+      value={business_name}
+    />
+    {
+      inputErrors.business_name && (
+        <p class="text-red-500">{inputErrors.business_name}</p>
+      )
+    }
+  </div>
+  <div class="mb-4">
+    <label for="name">Tenant Name:</label>
+    <input
+      type="text"
+      id="tenant_name"
+      name="tenant_name"
+      required
+      minlength="3"
+      class="w-full p-2 border rounded"
+      value={tenant_name}
+    />
+    {
+      inputErrors.tenant_name && (
         <p class="text-red-500">{inputErrors.tenant_name}</p>
-        }
-      </div>
-  
-    <div class="mb-4">
-      <label for="email">Email:</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        required
-        class="w-full p-2 border rounded"
-        value={email}
-      />
-      {inputErrors.email &&
-      <p class="text-red-500">{inputErrors.email}</p>
-      }
-    </div>
-    
-    <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded">
-      Save Tenant
-    </button>
-    <a href="/" class="btn btn-ghost rounded">Cancel</a>
-  </form>
+      )
+    }
+  </div>
+
+  <div class="mb-4">
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      class="w-full p-2 border rounded"
+      value={email}
+    />
+    {inputErrors.email && <p class="text-red-500">{inputErrors.email}</p>}
+  </div>
+
+  <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded">
+    Save Tenant
+  </button>
+  <a href="/" class="btn btn-ghost rounded">Cancel</a>
+</form>

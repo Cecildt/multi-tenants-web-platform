@@ -1,8 +1,27 @@
 ---
+import { actions } from "astro:actions";
+
 import TenantEditForm from "../../components/forms/TenantEditForm.astro";
 import NavBar from "../../components/menus/NavBar.astro";
 
 const { tenant_id } = Astro.params;
+
+const result = Astro.getActionResult(actions.tenants.editTenant);
+
+let business_name = "";
+let tenant_name = "";
+let email = "";
+
+if (result && !result.error) {
+  return Astro.redirect("/?tenant_id=" + result.data.tenant_id);
+} 
+
+if (result && result.error) {
+  const data = await Astro.request.formData();
+  business_name = data.get("business_name")?.toString() || "";
+  tenant_name = data.get("tenant_name")?.toString() || "";
+  email = data.get("email")?.toString() || "";
+}
 ---
 
 <html lang="en">
@@ -19,7 +38,7 @@ const { tenant_id } = Astro.params;
       <div class="size-14 flex-none"></div>
       <div class="size-32 grow">
         <h3 class="text-lg font-bold">Edit Tenant</h3>
-        <TenantEditForm tenant_id={tenant_id} business_name="test" tenant_name="test-123" email="test@test.com" />
+        <TenantEditForm tenant_id={tenant_id} business_name={business_name} tenant_name={tenant_name} email={email} />
       </div>
       <div class="size-14 flex-none"></div>
     </div>
