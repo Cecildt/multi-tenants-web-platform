@@ -1,34 +1,14 @@
 ---
-import NavBar from '../../components/menus/NavBar.astro'
+import DefaultLayout from "../../layouts/DefaultLayout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Tenants Admin Platform</title>
-  </head>
-  <body class="base-200">
-    <NavBar title="Analytics" />
-    <div class="flex">
-      <div class="size-14 flex-none"></div>
-      <div class="size-32 grow">
-        <div class="flex-row">
-          <ul
-            class="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box"
-          >
-            <li><a>View A</a></li>
-            <li><a>Filters</a></li>
-            <li><a>Item 3</a></li>
-          </ul>
-        </div>
-        <div class="flex-row">
-          Analytics - Coming Soon
-        </div>
-      </div>
-      <div class="size-14 flex-none"></div>
-    </div>
-  </body>
-</html>
+<DefaultLayout title="Analytics">
+  <div class="flex-row">
+    <ul class="menu menu-vertical lg:menu-horizontal bg-base-200 rounded-box">
+      <li><a>View A</a></li>
+      <li><a>Filters</a></li>
+      <li><a>Item 3</a></li>
+    </ul>
+  </div>
+  <div class="flex-row">Analytics - Coming Soon</div>
+</DefaultLayout>
