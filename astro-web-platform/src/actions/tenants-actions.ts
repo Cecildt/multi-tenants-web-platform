@@ -61,12 +61,33 @@ export const tenants = {
     },
   }),
   deleteTenant: defineAction({
-    accept: "form",
+    accept: "json",
     input: z.object({
       tenant_id: z.string().trim(),
     }),
     handler: async ({ tenant_id }) => {
       console.log("Delete tenant: ", tenant_id);
+      //   const comment = await db
+      //     .insert(Comment)
+      //     .values({
+      //       postSlug,
+      //       name,
+      //       email,
+      //       message,
+      //       createdAt: new Date(),
+      //     })
+      //     .returning();
+
+      return { tenant_id: tenant_id };
+    },
+  }),
+  getTenant: defineAction({
+    accept: "json",
+    input: z.object({
+      tenant_id: z.string().trim(),
+    }),
+    handler: async ({ tenant_id }) => {
+      console.log("Get tenant: ", tenant_id);
       //   const comment = await db
       //     .insert(Comment)
       //     .values({

@@ -1,4 +1,7 @@
 ---
+import TenantDeleteDialog from "../dialogs/TenantDeleteDialog.astro";
+import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
+
 
 ---
 
@@ -28,8 +31,8 @@
         <td>2025-02-01 15:00</td>
         <td>2025-02-01 15:00</td>
         <td><a class="btn btn-warning btn-xs" href="/tenants/eMtI22o3LYUNXzVQoz6us">Edit</a></td>
-        <td><button class="btn btn-info btn-xs">Details</button></td>
-        <td><button class="btn btn-error btn-xs">Delete</button></td>
+        <td><button class="btn btn-info btn-xs mt-btn-tenant-details" onclick="tenantDetailsDialog.showModal()" data-tenant-id="eMtI22o3LYUNXzVQoz6us">Details</button></td>
+        <td><button class="btn btn-error btn-xs mt-btn-tenant-delete" onclick="tenantDeleteDialog.showModal()" data-tenant-id="eMtI22o3LYUNXzVQoz6us">Delete</button></td>
       </tr>
       <!-- row 2 -->
       <tr>
@@ -39,9 +42,9 @@
         <td>comp-b@test.com</td>
         <td>2025-02-01 15:00</td>
         <td>2025-02-01 15:00</td>
-        <td><button class="btn btn-warning btn-xs">Edit</button></td>
-        <td><button class="btn btn-info btn-xs">Details</button></td>
-        <td><button class="btn btn-error btn-xs">Delete</button></td>
+        <td><a class="btn btn-warning btn-xs" href="/tenants/eMtI22o3LYUNXzVQoz6us">Edit</a></td>
+        <td><button class="btn btn-info btn-xs mt-btn-tenant-details" onclick="tenantDetailsDialog.showModal()" data-tenant-id="eMtI22o3LYUNXzVQoz777">Details</button></td>
+        <td><button class="btn btn-error btn-xs mt-btn-tenant-delete" onclick="tenantDeleteDialog.showModal()" data-tenant-id="eMtI22o3LYUNXzVQoz777">Delete</button></td>
       </tr>
       <!-- row 3 -->
       <tr>
@@ -58,3 +61,33 @@
     </tbody>
   </table>
 </div>
+<!-- dialogs -->
+<TenantDetailsDialog />
+<TenantDeleteDialog />
+
+<script>
+  document.querySelectorAll('.mt-btn-tenant-details').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      let btn = e.target as HTMLButtonElement;
+      const tenantId = btn.getAttribute('data-tenant-id');
+      console.log('Details Tenant ID:', tenantId);
+      const tenantInput = document.getElementById("details_tenantId") as HTMLInputElement;
+      if (tenantInput){
+        tenantInput.value = tenantId ?? 'unknown';
+      }
+    });
+  });
+
+  document.querySelectorAll('.mt-btn-tenant-delete').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      let btn = e.target as HTMLButtonElement;
+      const tenantId = btn.getAttribute('data-tenant-id');
+      console.log('Delete Tenant ID:', tenantId);
+      const tenantInput = document.getElementById("delete_tenantId") as HTMLInputElement;
+      if (tenantInput){
+        tenantInput.value = tenantId ?? 'unknown';
+      }
+      
+    });
+  });
+</script>

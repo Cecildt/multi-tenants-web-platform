@@ -1,0 +1,28 @@
+---
+
+---
+
+<!-- You can open the modal using ID.showModal() method -->
+<dialog id="tenantDetailsDialog" class="modal">
+  <div class="modal-box">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+        >✕</button
+      >
+    </form>
+    <h3 class="text-lg font-bold">Tenant Details</h3>
+    <input type="hidden" id="details_tenantId" value="unknown" />
+  </div>
+</dialog>
+
+<script>
+  import { actions } from "astro:actions";
+
+  const tenantInput = document.getElementById(
+    "details_tenantId"
+  ) as HTMLInputElement;
+  const tenantId = tenantInput?.value;
+  const { data, error } = await actions.tenants.getTenant({
+    tenant_id: tenantId,
+  });
+</script>
