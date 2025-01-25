@@ -1,25 +1,28 @@
 ---
+import { actions } from "astro:actions";
+
 import TenantAddForm from "../../components/forms/TenantAddForm.astro";
-import NavBar from "../../components/menus/NavBar.astro";
+import DefaultLayout from "../../layouts/DefaultLayout.astro";
+
+const result = Astro.getActionResult(actions.tenants.addTenant);
+
+let business_name = "";
+let tenant_name = "";
+let email = "";
+
+if (result && !result.error) {
+  return Astro.redirect("/?tenant_id=" + result.data.tenant_id);
+} 
+
+if (result && result.error) {
+  const data = await Astro.request.formData();
+  business_name = data.get("business_name")?.toString() || "";
+  tenant_name = data.get("tenant_name")?.toString() || "";
+  email = data.get("email")?.toString() || "";
+}
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Tenants Admin Platform</title>
-  </head>
-  <body class="base-200">
-    <NavBar title="Tenants" />
-    <div class="flex">
-      <div class="size-14 flex-none"></div>
-      <div class="size-32 grow">
-        <h3 class="text-lg font-bold">Create Tenant</h3>
-        <TenantAddForm />
-      </div>
-      <div class="size-14 flex-none"></div>
-    </div>
-  </body>
-</html>
+<DefaultLayout title="Tenants">
+  <h3 class="text-lg font-bold">Create Tenant</h3>
+  <TenantAddForm business_name={business_name} tenant_name={tenant_name} email={email} />
+</DefaultLayout>
