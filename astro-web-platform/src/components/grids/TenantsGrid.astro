@@ -22,7 +22,7 @@ import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
     <tbody>
       <!-- row 1 -->
       <tr>
-        <th>1</th>
+        <th>eMtI22o3LYUNXzVQoz6us</th>
         <td>Company A</td>
         <td>comany-a-2344</td>
         <td>comp-a@test.com</td>
@@ -51,7 +51,7 @@ import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
       </tr>
       <!-- row 2 -->
       <tr>
-        <th>2</th>
+        <th>eMtI22o3LYUNXzVQoz6us</th>
         <td>Company B</td>
         <td>comany-a-2344</td>
         <td>comp-b@test.com</td>
@@ -80,7 +80,7 @@ import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
       </tr>
       <!-- row 3 -->
       <tr>
-        <th>3</th>
+        <th>eMtI22o3LYUNXzVQoz333</th>
         <td>Company C</td>
         <td>comany-a-2344</td>
         <td>comp-c@test.com</td>
@@ -115,6 +115,12 @@ import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
       });
 
       // Set dialog values
+      document.getElementById("tenant_details_id")!.textContent = data?.tenant_id ?? "unknown";
+      document.getElementById("tenant_details_business")!.textContent = data?.business_name ?? "unknown";
+      document.getElementById("tenant_details_name")!.textContent = data?.tenant_name ?? "unknown";
+      document.getElementById("tenant_details_email")!.textContent = data?.email ?? "unknown";
+      document.getElementById("tenant_details_created")!.textContent = data?.created_at.toISOString() ?? new Date().toISOString();
+      // document.getElementById("tenant_details_updated")!.textContent = data?.updated_at ?? new Date().toISOString();
     });
   });
 

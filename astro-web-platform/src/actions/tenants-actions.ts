@@ -99,7 +99,7 @@ export const tenants = {
       //     })
       //     .returning();
 
-      return { tenant_id: tenant_id };
+      return { tenant_id: tenant_id, business_name: "Test", tenant_name: "test", email: "qwer@qwerty.com", created_at: new Date(), updated_at: new Date() };
     },
   }),
 };
