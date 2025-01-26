@@ -14,15 +14,3 @@
     <input type="hidden" id="details_tenantId" value="unknown" />
   </div>
 </dialog>
-
-<script>
-  import { actions } from "astro:actions";
-
-  const tenantInput = document.getElementById(
-    "details_tenantId"
-  ) as HTMLInputElement;
-  const tenantId = tenantInput?.value;
-  const { data, error } = await actions.tenants.getTenant({
-    tenant_id: tenantId,
-  });
-</script>
