@@ -128,7 +128,6 @@ import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
     btn.addEventListener("click", (e) => {
       let btn = e.target as HTMLButtonElement;
       const tenantId = btn.getAttribute("data-tenant-id");
-      console.log("Delete Tenant ID:", tenantId);
       const tenantInput = document.getElementById(
         "delete_tenantId"
       ) as HTMLInputElement;
