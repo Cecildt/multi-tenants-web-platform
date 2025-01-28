@@ -1,5 +1,6 @@
 import { ProductsStore } from "./products-store";
 import { TenantsStore } from "./tenants-store";
+import { UsersStore } from "./users-store";
 
 class DataStores {
 	constructor() {
@@ -11,6 +12,10 @@ class DataStores {
 
 	products() {
 		return new ProductsStore();
+	}
+
+	users() {
+		return new UsersStore();
 	}
 }
 
