@@ -102,9 +102,9 @@ export const tenants = {
       //     })
       //     .returning();
 
-      const db_manager = tenant_db_lib();
-      db_manager.tenants().addTenant();
-      db_manager.products().addProduct();
+      const data_stores = tenant_db_lib();
+      data_stores.tenants().addTenant();
+      data_stores.products().addProduct();
 
       return {
         tenant_id: tenant_id,

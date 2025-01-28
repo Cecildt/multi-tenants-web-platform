@@ -1,20 +1,20 @@
-import { ProductsDB } from "./products-db";
-import { TenantsDB } from "./tenants-db";
+import { ProductsStore } from "./products-store";
+import { TenantsStore } from "./tenants-store";
 
-class DatabaseAdapter {
+class DataStores {
 	constructor() {
 	}
 
 	tenants() {
-		return new TenantsDB();
+		return new TenantsStore();
 	}
 
 	products() {
-		return new ProductsDB();
+		return new ProductsStore();
 	}
 }
 
 export default function () {
-	return new DatabaseAdapter();
+	return new DataStores();
 }
 

@@ -1,6 +1,6 @@
 export default 'hello tenants!';
 
-export class TenantsDB {
+export class TenantsStore {
   constructor() {
   }
 
