@@ -1,15 +1,28 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
+import dts from "rollup-plugin-dts";
 
-export default {
-  input: "src/main.ts",
-  output: {
-    dir: "dist",
-    format: "cjs",
+export default [
+  {
+    input: "src/main.ts",
+    output: {
+      format: "es",
+      file: "build/bundle.js",
+      sourcemap: true,
+      exports: 'default',
+    },
+    plugins: [typescript(), commonjs()],
   },
-  plugins: [typescript()],
-};
+  {
+    input: "build/main.d.ts",
+    output: {
+      file: "build/bundle.d.ts",
+      format: "es",
+    },
+    plugins: [dts()],
+  },
+];
 
 // export default [
 // 	// browser-friendly UMD build

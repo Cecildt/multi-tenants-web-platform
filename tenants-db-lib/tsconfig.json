@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "moduleResolution": "node",
+      "removeComments": false,
+      "sourceMap": true,
+      "target": "es2022",
+      "outDir": "build",
+      "declaration": true,
+      "strict": true,
+      "module": "ESNext",
+      "noEmitOnError": true,
+      "lib": ["es2022", "DOM"],
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true
+    },
+    "include": ["src/**/*"],
+  }

@@ -1,6 +1,9 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { nanoid } from "nanoid";
+
+import tenant_db_lib from "tenants-db-lib";
+
 // import { db, Comment } from 'astro:db';
 
 export const tenants = {
@@ -98,6 +101,10 @@ export const tenants = {
       //       createdAt: new Date(),
       //     })
       //     .returning();
+
+      const db_manager = tenant_db_lib();
+      db_manager.tenants().addTenant();
+      db_manager.products().addProduct();
 
       return {
         tenant_id: tenant_id,

@@ -1,6 +1,20 @@
-console.log('Hello from tenants-db-lib');
+import { ProductsDB } from "./products-db";
+import { TenantsDB } from "./tenants-db";
 
+class DatabaseAdapter {
+	constructor() {
+	}
 
-export default function LunchTime() {
-	console.log('Lunch Time called');
+	tenants() {
+		return new TenantsDB();
+	}
+
+	products() {
+		return new ProductsDB();
+	}
 }
+
+export default function () {
+	return new DatabaseAdapter();
+}
+

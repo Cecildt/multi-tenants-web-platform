@@ -4,8 +4,9 @@
   "description": "Tenants domains database ORM library.",
   "license": "MIT",
   "author": "cecildt",
-  "main": "dist/main.cjs.js",
-  "module": "dist/main.esm.js",
+  "main": "build/bundle.js",
+  "module": "build/bundle.js",
+  "types": "build/bundle.d.ts",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
@@ -18,11 +19,14 @@
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^12.1.2",
-    "rollup": "^4.31.0",
+    "rollup": "4.32.1",
+    "rollup-plugin-dts": "^6.1.1",
     "tslib": "^2.8.1",
     "typescript": "^5.7.3"
   },
   "files": [
-    "dist"
-  ]
+  "build/bundle.d.ts",
+  "build/bundle.js",
+  "build/bundle.js.map"
+ ]
 }
