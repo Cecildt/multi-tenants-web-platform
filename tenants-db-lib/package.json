@@ -13,20 +13,35 @@
     "dev": "rollup -c -w",
     "test": "node test/test.js",
     "pretest": "npm run build",
-    "rollup": "rollup"
+    "rollup": "rollup",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx db/seed.ts",
+    "db:reset": "drizzle-kit reset && npm run db:seed",
+    "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^12.1.2",
+    "drizzle-kit": "^0.30.3",
     "rollup": "4.32.1",
     "rollup-plugin-dts": "^6.1.1",
     "tslib": "^2.8.1",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   },
   "files": [
-  "build/bundle.d.ts",
-  "build/bundle.js",
-  "build/bundle.js.map"
- ]
+    "build/bundle.d.ts",
+    "build/bundle.js",
+    "build/bundle.js.map"
+  ],
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.0",
+    "drizzle-seed": "^0.3.0",
+    "nanoid": "^5.0.9"
+  }
 }

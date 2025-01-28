@@ -1,12 +1,31 @@
 import { TenantEntity } from "./entities/tenant-entity";
+import { tenantsTable } from "../db/schema";
 
 export class TenantsStore {
-  constructor() {
+  _db: any;
+
+  constructor(db: any) {
+    console.log("Tenant Store: Constructor");
+    this._db = db;
   }
 
-  getTenants(): TenantEntity[] {
+  async getTenants(): Promise<TenantEntity[]> {
     console.log("Tenant Store: Get tenants");
+    const result = await this._db.select().from(tenantsTable).all();
 
+    if (result) {
+      return result.map((tenant: any) => {
+        return new TenantEntity(
+          tenant.tenant_id,
+          tenant.business_name,
+          tenant.tenant_name,
+          tenant.email,
+          new Date(tenant.created_timestamp),
+          new Date(tenant.updated_timestamp)
+        );
+      });
+    }
+        
     return [];
   }
 

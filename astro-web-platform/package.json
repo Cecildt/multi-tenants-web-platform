@@ -13,6 +13,7 @@
     "@astrojs/cloudflare": "^12.2.1",
     "@astrojs/tailwind": "^5.1.5",
     "astro": "5.1.9",
+    "dotenv": "^16.4.7",
     "nanoid": "^5.0.9",
     "tenants-db-lib": "file:../tenants-db-lib"
   },
