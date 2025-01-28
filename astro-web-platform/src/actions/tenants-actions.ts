@@ -103,16 +103,15 @@ export const tenants = {
       //     .returning();
 
       const data_stores = tenant_db_lib();
-      data_stores.tenants().addTenant();
-      data_stores.products().addProduct();
+      let tenant = data_stores.tenants().getTenantByID(tenant_id);
 
       return {
-        tenant_id: tenant_id,
-        business_name: "Test",
-        tenant_name: "test",
-        email: "qwer@qwerty.com",
-        created_at: new Date(),
-        updated_at: new Date(),
+        tenant_id: tenant.tenant_id,
+        business_name: tenant.business_name,
+        tenant_name: tenant.tenant_name,
+        email: tenant.email,
+        created_at: tenant.created_timestamp,
+        updated_at: tenant.updated_timestamp,
       };
     },
   }),
