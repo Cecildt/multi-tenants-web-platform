@@ -6,19 +6,26 @@ import { TenantsStore } from "./tenants-store";
 import { UsersStore } from "./users-store";
 
 class DataStores {
-	_db: any;
+	// private db_con: any;
 
 	constructor() {
-		const turso = createClient({
-			url: process.env.TURSO_DATABASE_URL!,
-			authToken: process.env.TURSO_AUTH_TOKEN,
-		  });
+		// const turso = createClient({
+		// 	url: process.env.TURSO_DATABASE_URL!,
+		// 	authToken: process.env.TURSO_AUTH_TOKEN,
+		//   });
 
-		  this._db = drizzle(turso);
+		//   this.db_con = drizzle(turso);
 	}
 
 	tenants() {
-		return new TenantsStore(this._db);
+		const turso = createClient({
+			url: process.env.TURSO_DATABASE_URL ? process.env.TURSO_DATABASE_URL : '',
+			authToken: process.env.TURSO_AUTH_TOKEN,
+		  });
+
+		  const db_con = drizzle(turso);
+
+		return new TenantsStore(db_con);
 	}
 
 	products() {

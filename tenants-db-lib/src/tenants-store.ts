@@ -2,16 +2,16 @@ import { TenantEntity } from "./entities/tenant-entity";
 import { tenantsTable } from "../db/schema";
 
 export class TenantsStore {
-  _db: any;
+  #db: any;
 
   constructor(db: any) {
     console.log("Tenant Store: Constructor");
-    this._db = db;
+    this.#db = db;
   }
 
   async getTenants(): Promise<TenantEntity[]> {
     console.log("Tenant Store: Get tenants");
-    const result = await this._db.select().from(tenantsTable).all();
+    const result = await this.#db.select().from(tenantsTable).all();
 
     if (result) {
       return result.map((tenant: any) => {

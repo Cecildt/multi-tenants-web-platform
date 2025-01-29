@@ -1,6 +1,5 @@
 import { sql } from "drizzle-orm";
 import { text, sqliteTable, integer } from "drizzle-orm/sqlite-core";
-import { nanoid } from "nanoid";
 
 export const tenantsTable = sqliteTable('tenants', {
   tenant_id: text('tenant_id').notNull().primaryKey(),
