@@ -11,7 +11,8 @@
       "noEmitOnError": true,
       "lib": ["ES2022", "DOM"],
       "esModuleInterop": false,
-      "forceConsistentCasingInFileNames": true
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true,
     },
-    "include": ["src/**/*"],
+    "include": ["db/schema.ts", "src/**/*"],
   }

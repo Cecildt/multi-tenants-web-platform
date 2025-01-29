@@ -1,11 +1,12 @@
 import { TenantEntity } from "./entities/tenant-entity";
 import { tenantsTable } from "../db/schema";
+import { eq } from "drizzle-orm";
+import { LibSQLDatabase } from "drizzle-orm/libsql";
 
 export class TenantsStore {
-  #db: any;
+  #db: LibSQLDatabase;
 
-  constructor(db: any) {
-    console.log("Tenant Store: Constructor");
+  constructor(db: LibSQLDatabase) {
     this.#db = db;
   }
 
@@ -29,9 +30,23 @@ export class TenantsStore {
     return [];
   }
 
-  getTenantByID(tenant_id: string): TenantEntity {
-    console.log("Tenant Store: Get tenant by ID");
-    return new TenantEntity(tenant_id, 'Test Business', 'Test Tenant', 'qwerty@test.co', new Date(), new Date());
+  async getTenantByID(tenant_id: string): Promise<TenantEntity | null> {
+    console.log("Tenant Store: Get tenant by ID: ", tenant_id);
+    const result = await this.#db.select().from(tenantsTable).where(eq(tenantsTable.tenant_id, tenant_id));
+    console.log(result.length);
+    
+    if (result && result.length > 0) {
+      return new TenantEntity(
+        result[0].tenant_id,
+        result[0].business_name,
+        result[0].tenant_name,
+        result[0].email,
+        new Date(result[0].created_timestamp),
+        new Date(result[0].updated_timestamp ?? new Date())
+      );    
+    }
+
+    return null;
   }
 
   addTenant(tenant: TenantEntity) {

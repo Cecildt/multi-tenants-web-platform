@@ -91,27 +91,29 @@ export const tenants = {
     }),
     handler: async ({ tenant_id }) => {
       console.log("Get tenant: ", tenant_id);
-      //   const comment = await db
-      //     .insert(Comment)
-      //     .values({
-      //       postSlug,
-      //       name,
-      //       email,
-      //       message,
-      //       createdAt: new Date(),
-      //     })
-      //     .returning();
 
       const data_stores = tenant_db_lib();
-      let tenant = data_stores.tenants().getTenantByID(tenant_id);
+      let tenant = await data_stores.tenants().getTenantByID(tenant_id);
+
+
+      if (tenant) {
+        return {
+          tenant_id: tenant.tenant_id,
+          business_name: tenant.business_name,
+          tenant_name: tenant.tenant_name,
+          email: tenant.email,
+          created_at: tenant.created_timestamp,
+          updated_at: tenant.updated_timestamp,
+        };
+      } 
 
       return {
-        tenant_id: tenant.tenant_id,
-        business_name: tenant.business_name,
-        tenant_name: tenant.tenant_name,
-        email: tenant.email,
-        created_at: tenant.created_timestamp,
-        updated_at: tenant.updated_timestamp,
+        tenant_id: '',
+        business_name: '',
+        tenant_name: '',
+        email: '',
+        created_at: '',
+        updated_at: '',
       };
     },
   }),

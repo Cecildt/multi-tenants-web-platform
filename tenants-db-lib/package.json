@@ -8,8 +8,8 @@
   "module": "build/bundle.js",
   "types": "build/bundle.d.ts",
   "scripts": {
-    "build": "parcel build",
-    "dev": "parcel watch",
+    "build": "parcel build --no-optimize",
+    "dev": "parcel watch --no-optimize",
     "test": "node test/test.js",
     "pretest": "npm run build",
     "rollup": "rollup",
