@@ -1,10 +1,15 @@
 ---
 import TenantDeleteDialog from "../dialogs/TenantDeleteDialog.astro";
 import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
+
+import tenant_db_lib from "tenants-db-lib";
+
+const data_stores = tenant_db_lib();
+let tenants = await data_stores.tenants().getTenants();
 ---
 
 <div class="overflow-x-auto">
-  <table class="table">
+  <table class="table w-11/12">
     <!-- head -->
     <thead>
       <tr>
@@ -20,76 +25,44 @@ import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
       </tr>
     </thead>
     <tbody>
-      <!-- row 1 -->
-      <tr>
-        <th>eMtI22o3LYUNXzVQoz6us</th>
-        <td>Company A</td>
-        <td>comany-a-2344</td>
-        <td>comp-a@test.com</td>
-        <td>2025-02-01 15:00</td>
-        <td>2025-02-01 15:00</td>
-        <td
-          ><a
-            class="btn btn-warning btn-xs"
-            href="/tenants/eMtI22o3LYUNXzVQoz6us">Edit</a
-          ></td
-        >
-        <td
-          ><button
-            class="btn btn-info btn-xs mt-btn-tenant-details"
-            onclick="tenantDetailsDialog.showModal()"
-            data-tenant-id="eMtI22o3LYUNXzVQoz6us">Details</button
-          ></td
-        >
-        <td
-          ><button
-            class="btn btn-error btn-xs mt-btn-tenant-delete"
-            onclick="tenantDeleteDialog.showModal()"
-            data-tenant-id="eMtI22o3LYUNXzVQoz6us">Delete</button
-          ></td
-        >
-      </tr>
-      <!-- row 2 -->
-      <tr>
-        <th>00eqefnPiBQORZX9sa0IR</th>
-        <td>Company B</td>
-        <td>comany-a-2344</td>
-        <td>comp-b@test.com</td>
-        <td>2025-02-01 15:00</td>
-        <td>2025-02-01 15:00</td>
-        <td
-          ><a
-            class="btn btn-warning btn-xs"
-            href="/tenants/00eqefnPiBQORZX9sa0IR">Edit</a
-          ></td
-        >
-        <td
-          ><button
-            class="btn btn-info btn-xs mt-btn-tenant-details"
-            onclick="tenantDetailsDialog.showModal()"
-            data-tenant-id="00eqefnPiBQORZX9sa0IR">Details</button
-          ></td
-        >
-        <td
-          ><button
-            class="btn btn-error btn-xs mt-btn-tenant-delete"
-            onclick="tenantDeleteDialog.showModal()"
-            data-tenant-id="00eqefnPiBQORZX9sa0IR">Delete</button
-          ></td
-        >
-      </tr>
-      <!-- row 3 -->
-      <tr>
-        <th>eMtI22o3LYUNXzVQoz333</th>
-        <td>Company C</td>
-        <td>comany-a-2344</td>
-        <td>comp-c@test.com</td>
-        <td>2025-02-01 15:00</td>
-        <td>2025-02-01 15:00</td>
-        <td><button class="btn btn-warning btn-xs">Edit</button></td>
-        <td><button class="btn btn-info btn-xs">Details</button></td>
-        <td><button class="btn btn-error btn-xs">Delete</button></td>
-      </tr>
+      {
+        tenants.map((tenant) => (
+          <tr>
+            <td>{tenant.tenant_id}</td>
+            <td>{tenant.business_name}</td>
+            <td>{tenant.tenant_name}</td>
+            <td>{tenant.email}</td>
+            <td>{tenant.created_timestamp.toISOString()}</td>
+            <td>{tenant.updated_timestamp.toISOString()}</td>
+            <td>
+              <button
+                class="btn btn-info btn-xs mt-btn-tenant-details"
+                onclick="tenantDetailsDialog.showModal()"
+                data-tenant-id={tenant.tenant_id}
+              >
+                Details
+              </button>
+            </td>
+            <td>
+              <a
+                class="btn btn-warning btn-xs"
+                href="/tenants/{tenant.tenant_id}"
+              >
+                Edit
+              </a>
+            </td>
+            <td>
+              <button
+                class="btn btn-error btn-xs mt-btn-tenant-delete"
+                onclick="tenantDeleteDialog.showModal()"
+                data-tenant-id={tenant.tenant_id}
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))
+      }
     </tbody>
   </table>
 </div>
@@ -115,11 +88,16 @@ import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
       });
 
       // Set dialog values
-      document.getElementById("tenant_details_id")!.textContent = data?.tenant_id ?? "unknown";
-      document.getElementById("tenant_details_business")!.textContent = data?.business_name ?? "unknown";
-      document.getElementById("tenant_details_name")!.textContent = data?.tenant_name ?? "unknown";
-      document.getElementById("tenant_details_email")!.textContent = data?.email ?? "unknown";
-      document.getElementById("tenant_details_created")!.textContent = data?.created_at.toISOString() ?? new Date().toISOString();
+      document.getElementById("tenant_details_id")!.textContent =
+        data?.tenant_id ?? "unknown";
+      document.getElementById("tenant_details_business")!.textContent =
+        data?.business_name ?? "unknown";
+      document.getElementById("tenant_details_name")!.textContent =
+        data?.tenant_name ?? "unknown";
+      document.getElementById("tenant_details_email")!.textContent =
+        data?.email ?? "unknown";
+      document.getElementById("tenant_details_created")!.textContent =
+        data?.created_at.toString() ?? new Date().toISOString();
       // document.getElementById("tenant_details_updated")!.textContent = data?.updated_at ?? new Date().toISOString();
     });
   });
