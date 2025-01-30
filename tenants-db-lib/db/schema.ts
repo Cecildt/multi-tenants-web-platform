@@ -7,7 +7,7 @@ export const tenantsTable = sqliteTable('tenants', {
   business_name: text('business_name').notNull(),
   email: text('email').notNull(),
   created_timestamp: text('created_timestamp').notNull().default(sql`(CURRENT_TIMESTAMP)`),
-  updated_timestamp: integer('updated_at', { mode: 'timestamp' }).$onUpdate(() => new Date()),
+  updated_timestamp: text('updated_timestamp').notNull().default(sql`(CURRENT_TIMESTAMP)`),
 });
 
 

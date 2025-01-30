@@ -42,7 +42,7 @@ export class TenantsStore {
         result[0].tenant_name,
         result[0].email,
         new Date(result[0].created_timestamp),
-        new Date(result[0].updated_timestamp ?? new Date())
+        new Date(result[0].updated_timestamp)
       );    
     }
 

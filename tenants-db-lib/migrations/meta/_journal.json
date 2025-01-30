@@ -8,6 +8,13 @@
       "when": 1738102442748,
       "tag": "0000_swift_tarantula",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1738268639010,
+      "tag": "0001_tired_skullbuster",
+      "breakpoints": true
     }
   ]
 }

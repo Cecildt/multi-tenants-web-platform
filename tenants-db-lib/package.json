@@ -17,8 +17,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx db/seed.ts",
-    "db:reset": "drizzle-kit reset && npm run db:seed",
-    "db:studio": "drizzle-kit studio"
+    "db:reset": "npm run db:migrate && npm run db:seed",
+    "db:studio": "drizzle-kit studio",
+    "turso:local": "turso dev"
   },
   "devDependencies": {
     "@parcel/packager-ts": "^2.13.3",
