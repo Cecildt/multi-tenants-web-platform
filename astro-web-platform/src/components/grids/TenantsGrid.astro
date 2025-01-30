@@ -97,8 +97,8 @@ let tenants = await data_stores.tenants().getTenants();
       document.getElementById("tenant_details_email")!.textContent =
         data?.email ?? "unknown";
       document.getElementById("tenant_details_created")!.textContent =
-        data?.created_at.toString() ?? new Date().toISOString();
-      // document.getElementById("tenant_details_updated")!.textContent = data?.updated_at ?? new Date().toISOString();
+        data?.created_at.toString() ?? "unknown";
+      document.getElementById("tenant_details_updated")!.textContent = data?.updated_at.toString() ?? "unknown";
     });
   });
 
