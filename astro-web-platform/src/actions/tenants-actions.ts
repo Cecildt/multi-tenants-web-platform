@@ -70,16 +70,9 @@ export const tenants = {
     }),
     handler: async ({ tenant_id }) => {
       console.log("Delete tenant: ", tenant_id);
-      //   const comment = await db
-      //     .insert(Comment)
-      //     .values({
-      //       postSlug,
-      //       name,
-      //       email,
-      //       message,
-      //       createdAt: new Date(),
-      //     })
-      //     .returning();
+
+      const data_stores = tenant_db_lib();
+      await data_stores.tenants().deleteTenant(tenant_id);
 
       return { tenant_id: tenant_id };
     },

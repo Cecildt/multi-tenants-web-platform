@@ -59,5 +59,6 @@ export class TenantsStore {
 
   deleteTenant(tenant_id: string) {
     console.log("Tenant Store: Delete tenant");
+    this.#db.delete(tenantsTable).where(eq(tenantsTable.tenant_id, tenant_id));
   }
 }

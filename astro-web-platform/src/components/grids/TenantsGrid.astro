@@ -103,7 +103,7 @@ let tenants = await data_stores.tenants().getTenants();
   });
 
   document.querySelectorAll(".mt-btn-tenant-delete").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", async (e) => {
       let btn = e.target as HTMLButtonElement;
       const tenantId = btn.getAttribute("data-tenant-id");
       const tenantInput = document.getElementById(
@@ -112,6 +112,13 @@ let tenants = await data_stores.tenants().getTenants();
       if (tenantInput) {
         tenantInput.value = tenantId ?? "unknown";
       }
+
+      const { data, error } = await actions.tenants.getTenant({
+        tenant_id: tenantId ?? "unknown",
+      });
+
+      document.getElementById("tenant_delete_name")!.textContent =
+        data?.tenant_name ?? "unknown";
     });
   });
 </script>
