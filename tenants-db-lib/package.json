@@ -22,14 +22,14 @@
     "turso:local": "turso dev"
   },
   "devDependencies": {
-    "@parcel/packager-ts": "^2.13.3",
-    "@parcel/transformer-typescript-types": "^2.13.3",
-    "@types/node": "^22.12.0",
-    "drizzle-kit": "0.30.4",
-    "parcel": "^2.13.3",
+    "@parcel/packager-ts": "^2.16.4",
+    "@parcel/transformer-typescript-types": "^2.16.4",
+    "@types/node": "^22.20.2",
+    "drizzle-kit": "0.31.10",
+    "parcel": "^2.16.4",
     "tslib": "^2.8.1",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
   },
   "files": [
     "build/bundle.d.ts",
@@ -37,10 +37,10 @@
     "build/bundle.js.map"
   ],
   "dependencies": {
-    "@libsql/client": "^0.14.0",
-    "dotenv": "^16.4.7",
-    "drizzle-orm": "0.39.1",
+    "@libsql/client": "^0.18.0",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "0.45.2",
     "drizzle-seed": "0.3.1",
-    "nanoid": "^5.0.9"
+    "nanoid": "^6.0.1"
   }
 }
