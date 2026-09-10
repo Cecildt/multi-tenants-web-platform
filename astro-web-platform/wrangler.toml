@@ -1,6 +1,6 @@
 name = "tenants-admin-web-platform"
+main = "@astrojs/cloudflare/entrypoints/server"
 compatibility_date = "2025-01-19"
-pages_build_output_dir = "./dist"
 compatibility_flags = [ "nodejs_compat" ]
 
 [env.development.vars]
