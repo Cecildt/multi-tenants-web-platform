@@ -22,46 +22,34 @@ A platform to setup and manage  multi-tenants to support multiple web app produc
 
 ## Development
 
-### Turso
+### D1 Database
+
+Look up the existing `tenants-db` D1 database ID using the Cloudflare dashboard
+(Storage & Databases → D1) or:
 
 ```bash
-    turso auth login
+wrangler d1 list
 ```
 
+Copy the `database_id` into the `DATABASE_ID` placeholder in
+`astro-web-platform/wrangler.toml` (all three occurrences: top level,
+`[env.development]`, and `[env.production]`).
+
+Whenever you make changes to the schema, generate a new migration (run in
+`tenants-db-lib`):
+
 ```bash
-    turso db show --url <database-name>
+npm run db:generate
 ```
 
+Apply migrations to the local D1 database (run in `astro-web-platform`):
+
 ```bash
-    turso db tokens create <database-name>
+npm run db:migrate:local
 ```
 
-Whenever you make changes to the schema, run db:generate:
+Seed the local D1 database (run in `astro-web-platform`):
 
 ```bash
-    npm run db:generate
-```
-
-Now apply these changes to the database with db:migrate:
-
-```bash
-    npm run db:migrate
-```
-
-To apply the seed data to the database, run db:seed:
-
-```bash
-    npm run db:seed
-```
-
-To apply db schema changes quickly, run db:push:
-
-```bash
-    npm run db:push
-```
-
-To reset the database, run db:reset:
-
-```bash
-    npm run db:reset
+npm run db:seed:local
 ```

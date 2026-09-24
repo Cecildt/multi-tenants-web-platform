@@ -4,5 +4,5 @@ CREATE TABLE `tenants` (
 	`business_name` text NOT NULL,
 	`email` text NOT NULL,
 	`created_timestamp` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
-	`updated_at` integer
+	`updated_timestamp` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL
 );
