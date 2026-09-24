@@ -1,21 +1,64 @@
-# API Documentation Design
+# API Documentation
 
-TBD
+## GraphQL API (`tenants-graphql-api`)
 
-## API Endpoints
+The API is served at `POST /graphql`. Requests must have a JSON body `{ "query": string, "variables"?: object }`.
 
-### Tenants
+### Types
 
-- [ ] GET /api/v1/tenants
-- [ ] GET /api/v1/tenants/{id}
-- [ ] POST /api/v1/tenants
-- [ ] PUT /api/v1/tenants/{id}
-- [ ] DELETE /api/v1/tenants/{id}
+```graphql
+type Tenant {
+  tenantId: ID!
+  businessName: String!
+  tenantName: String!
+  email: String!
+  createdAt: String!   # ISO 8601 UTC: YYYY-MM-DDTHH:MM:SSZ
+  updatedAt: String!   # ISO 8601 UTC: YYYY-MM-DDTHH:MM:SSZ
+}
 
-### Products
+input CreateTenantInput {
+  businessName: String!
+  tenantName: String!
+  email: String!
+}
 
-- [ ] GET /api/v1/products
-- [ ] GET /api/v1/products/{id}
-- [ ] POST /api/v1/products
-- [ ] PUT /api/v1/products/{id}
-- [ ] DELETE /api/v1/products/{id}
+input UpdateTenantInput {
+  businessName: String!
+  tenantName: String!
+  email: String!
+}
+```
+
+### Queries
+
+```graphql
+type Query {
+  tenants: [Tenant!]!
+  tenant(tenantId: ID!): Tenant
+}
+```
+
+### Mutations
+
+```graphql
+type Mutation {
+  createTenant(input: CreateTenantInput!): Tenant!
+  updateTenant(tenantId: ID!, input: UpdateTenantInput!): Tenant
+  deleteTenant(tenantId: ID!): Boolean!
+}
+```
+
+### Error Codes
+
+| `extensions.code`       | Meaning                                                         |
+|-------------------------|-----------------------------------------------------------------|
+| `BAD_USER_INPUT`        | Input failed validation. `extensions.field` names the field.   |
+| `INTERNAL_SERVER_ERROR` | A database or unexpected error occurred (details not exposed).  |
+
+### Example
+
+```bash
+curl -X POST http://localhost:8787/graphql \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"{ tenants { tenantId businessName tenantName email createdAt updatedAt } }"}'
+```

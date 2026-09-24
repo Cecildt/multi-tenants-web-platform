@@ -32,8 +32,7 @@ wrangler d1 list
 ```
 
 Copy the `database_id` into the `DATABASE_ID` placeholder in
-`astro-web-platform/wrangler.toml` (all three occurrences: top level,
-`[env.development]`, and `[env.production]`).
+`tenants-graphql-api/wrangler.toml`.
 
 Whenever you make changes to the schema, generate a new migration (run in
 `tenants-db-lib`):
@@ -42,14 +41,28 @@ Whenever you make changes to the schema, generate a new migration (run in
 npm run db:generate
 ```
 
-Apply migrations to the local D1 database (run in `astro-web-platform`):
+### Local Development
 
-```bash
-npm run db:migrate:local
-```
+1. Apply migrations and seed the local D1 database (run in `tenants-graphql-api`):
 
-Seed the local D1 database (run in `astro-web-platform`):
+   ```bash
+   npm install
+   npm run db:migrate:local
+   npm run db:seed:local
+   ```
 
-```bash
-npm run db:seed:local
-```
+2. Start the GraphQL API (run in `tenants-graphql-api`):
+
+   ```bash
+   npm run dev
+   ```
+
+3. Copy the example dev vars file and start Astro (run in `astro-web-platform`):
+
+   ```bash
+   cp .dev.vars.example .dev.vars
+   npm run dev
+   ```
+
+The admin app is available at `http://localhost:4321`. The migrate and seed scripts
+now live in `tenants-graphql-api`.

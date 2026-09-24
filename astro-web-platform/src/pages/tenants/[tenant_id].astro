@@ -5,23 +5,33 @@ import { actions } from "astro:actions";
 import TenantEditForm from "../../components/forms/TenantEditForm.astro";
 import NavBar from "../../components/menus/NavBar.astro";
 
+import { getTenant } from "../../lib/tenants-api";
+
 const { tenant_id } = Astro.params;
 
 const result = Astro.getActionResult(actions.tenants.editTenant);
 
+if (result && !result.error) {
+  return Astro.redirect("/?tenant_id=" + result.data.tenant_id);
+}
+
 let business_name = "";
 let tenant_name = "";
 let email = "";
-
-if (result && !result.error) {
-  return Astro.redirect("/?tenant_id=" + result.data.tenant_id);
-} 
 
 if (result && result.error) {
   const data = await Astro.request.formData();
   business_name = data.get("business_name")?.toString() || "";
   tenant_name = data.get("tenant_name")?.toString() || "";
   email = data.get("email")?.toString() || "";
+} else {
+  const tenant = await getTenant(tenant_id ?? "").catch(() => null);
+  if (!tenant) {
+    return new Response(null, { status: 404 });
+  }
+  business_name = tenant.businessName;
+  tenant_name = tenant.tenantName;
+  email = tenant.email;
 }
 ---
 
