@@ -64,6 +64,9 @@ Add `tenants-graphql-api/package.json` (private, `wrangler` dev dependency) with
 ### 6. No public API in production
 Set `workers_dev = false` and `preview_urls = false` in `tenants-graphql-api/wrangler.toml`, with no routes. Service bindings still work, and `wrangler dev` still serves on `localhost:8787`. This makes it safe to ship mutations without auth for now.
 
+### 7. `tenants-db-lib` runtime exports are removed in a follow-up
+After this change nothing imports `tenants-db-lib` at runtime. A separate follow-up change removes its `DataStores` and `TenantsStore` exports (`src/main.ts`, `src/tenants-store.ts`, `src/entities/`) and the build that ships them, so the package holds only the Drizzle schema, migrations, and seed. This change leaves those exports alone to keep it focused and easy to roll back: the previous Astro version still imports them (see Migration Plan).
+
 ## Risks / Trade-offs
 
 - [The `SendWrapper` misuse compiles but could panic if a future is moved across threads] → Workers are single-threaded. Keep the wrapping in one helper in `tenants.rs` so it's easy to audit.
@@ -80,7 +83,3 @@ Set `workers_dev = false` and `preview_urls = false` in `tenants-graphql-api/wra
 2. Build and deploy `tenants-graphql-api` (`npm run deploy` in that folder). Verify it with `wrangler tail` or a temporary local `wrangler dev` query.
 3. Deploy `astro-web-platform` with the `TENANTS_API` binding.
 4. **Rollback:** redeploy the previous Astro version (`wrangler rollback` in `astro-web-platform`). It still has the D1 binding and `tenants-db-lib`, and the data hasn't changed shape. The API can stay deployed.
-
-## Open Questions
-
-- Should the unused runtime `DataStores`/`TenantsStore` exports be removed from `tenants-db-lib`, leaving it schema and migrations only, in a follow-up? This doesn't affect this change.

@@ -37,4 +37,5 @@ None. No specs exist yet under `openspec/specs/`.
 - **Dependencies:** Rust adds `async-graphql` (no default features), `serde`, `serde_json`, `uuid` (`v4`, `js`), and enables the `worker` crate's `d1` feature. Astro removes `tenants-db-lib`, `nanoid`, and `dotenv` (unused).
 - **Infrastructure:** Astro's `wrangler.toml` swaps `[[d1_databases]]` for `[[services]]`. The API must be deployed before Astro, because a service binding to a Worker that doesn't exist fails to deploy.
 - **Depends on:** `migrate-turso-to-d1`. Its remaining manual tasks (real `database_id`, local and remote migrate and seed) must be done before the verification steps here.
-- **Out of scope:** authentication and authorization between Astro and the API; users and products; pagination; removing the now-unused runtime `DataStores`/`TenantsStore` from `tenants-db-lib`.
+- **Out of scope:** authentication and authorization between Astro and the API; users and products; pagination.
+- **Follow-up:** a separate change removes the now-unused runtime `DataStores`/`TenantsStore` exports from `tenants-db-lib`, leaving it as schema, migrations, and seed only.
