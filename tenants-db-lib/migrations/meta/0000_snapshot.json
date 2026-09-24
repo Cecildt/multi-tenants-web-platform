@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "8e965042-db19-4526-9580-166bdac49132",
+  "id": "20417f92-1e6d-4267-839b-276f7efbb08d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "tenants": {
@@ -43,12 +43,13 @@
           "autoincrement": false,
           "default": "(CURRENT_TIMESTAMP)"
         },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
+        "updated_timestamp": {
+          "name": "updated_timestamp",
+          "type": "text",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(CURRENT_TIMESTAMP)"
         }
       },
       "indexes": {},

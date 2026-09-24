@@ -3,10 +3,31 @@ main = "@astrojs/cloudflare/entrypoints/server"
 compatibility_date = "2025-01-19"
 compatibility_flags = [ "nodejs_compat" ]
 
+# Bindings are not inherited by env blocks; repeat them in each env below.
+[[d1_databases]]
+binding = "DB"
+database_name = "tenants-db"
+database_id = "DATABASE_ID"
+migrations_dir = "../tenants-db-lib/migrations"
+
+# Development environment
+# Bindings must be re-declared here because they are not inherited from the top level.
 [env.development.vars]
-ASTRO_DB_REMOTE_URL = "libsql://tenants-db-cecildt.turso.io"
 NODE_VERSION = "22.13.0"
 
+[[env.development.d1_databases]]
+binding = "DB"
+database_name = "tenants-db"
+database_id = "DATABASE_ID"
+migrations_dir = "../tenants-db-lib/migrations"
+
+# Production environment
+# Bindings must be re-declared here because they are not inherited from the top level.
 [env.production.vars]
-ASTRO_DB_REMOTE_URL = "libsql://tenants-db-cecildt.turso.io"
 NODE_VERSION = "22.13.0"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "tenants-db"
+database_id = "DATABASE_ID"
+migrations_dir = "../tenants-db-lib/migrations"

@@ -1,20 +1,21 @@
-import { drizzle, LibSQLDatabase } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/d1";
+import type { DrizzleD1Database } from "drizzle-orm/d1";
+import { TenantsStore } from "./tenants-store";
+
+type AnyD1Database = Parameters<typeof drizzle>[0];
 
 class DataStores {
-	#db: LibSQLDatabase;
+	#db: DrizzleD1Database;
 
-	constructor() {
-		const turso = createClient({
-			url: process.env.TURSO_DATABASE_URL!,
-			authToken: process.env.TURSO_AUTH_TOKEN,
-		  });
-
-		  this.#db = drizzle(turso);
+	constructor(db: AnyD1Database) {
+		this.#db = drizzle(db);
 	}
 
+	tenants(): TenantsStore {
+		return new TenantsStore(this.#db);
+	}
 }
 
-export default function () {
-	return new DataStores();
+export default function (db: AnyD1Database): DataStores {
+	return new DataStores(db);
 }
