@@ -101,25 +101,19 @@ export const tenants = {
     handler: async ({ tenant_id }) => {
       try {
         const tenant = await getTenant(tenant_id);
-        if (tenant) {
-          return {
-            tenant_id: tenant.tenantId,
-            business_name: tenant.businessName,
-            tenant_name: tenant.tenantName,
-            email: tenant.email,
-            created_at: tenant.createdAt,
-            updated_at: tenant.updatedAt,
-          };
+        if (!tenant) {
+          throw new ActionError({ code: "NOT_FOUND", message: "Tenant not found" });
         }
         return {
-          tenant_id: "",
-          business_name: "",
-          tenant_name: "",
-          email: "",
-          created_at: "",
-          updated_at: "",
+          tenant_id: tenant.tenantId,
+          business_name: tenant.businessName,
+          tenant_name: tenant.tenantName,
+          email: tenant.email,
+          created_at: tenant.createdAt,
+          updated_at: tenant.updatedAt,
         };
       } catch (err) {
+        if (err instanceof ActionError) throw err;
         handleApiError(err);
       }
     },
