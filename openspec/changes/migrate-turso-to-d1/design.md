@@ -7,10 +7,11 @@ See proposal.md for why. Here is the current shape of the code:
 ```
 astro-web-platform (Worker, Astro 7 SSR, workerd in dev)
   TenantsGrid.astro, tenants-actions.ts
-        |  tenant_db_lib()            <-- no args
+        |  tenant_db_lib().tenants()  <-- no args; tenants() was removed in PR #11
         v
 tenants-db-lib (Parcel bundle, file: dependency)
   DataStores(): createClient({ url: TURSO_DATABASE_URL, authToken })
+  (no stores: tenants/products/users stores were removed in PR #11)
         |  libsql over network
         v
 Turso "tenants-db"
@@ -34,43 +35,55 @@ Constraints:
 **Non-Goals:**
 - Rust code that queries D1 (this change only adds the binding).
 - Per-tenant databases.
-- Fixing `deleteTenant` or implementing the stub stores (users, products, add/edit tenant).
+- Users or products stores, or adding and editing tenants.
 - Drizzle Studio / `drizzle-kit push` against remote D1.
 
 ## Decisions
 
 ### 1. `DataStores` takes the binding; typed as `AnyD1Database`
 
-`tenants-db-lib` default export becomes `(db: AnyD1Database) => DataStores`, and `DataStores` wraps it with `drizzle(db)` from `drizzle-orm/d1`. Stores take `DrizzleD1Database` instead of `LibSQLDatabase`.
+`tenants-db-lib` default export becomes `(db: AnyD1Database) => DataStores`, and `DataStores` wraps it with `drizzle(db)` from `drizzle-orm/d1`. `DataStores.tenants()` returns a `TenantsStore` built on the `DrizzleD1Database`.
 
 - `AnyD1Database` is Drizzle's own type. It resolves to the global `D1Database` when `@cloudflare/workers-types` is loaded. The bundled `.d.ts` therefore doesn't import the workers-types package itself, and consumers can use either Wrangler-generated types or workers-types.
 - *Alternative:* keep reading the binding inside the lib through `cloudflare:workers`. Rejected: it ties the library to the Workers runtime, and tests couldn't pass in a different database.
 
-### 2. Astro gets the binding from `cloudflare:workers`
+### 2. A new `TenantsStore` written for D1
+
+`src/tenants-store.ts` holds a new `TenantsStore` that takes `DrizzleD1Database`:
+
+- `getTenants(): Promise<TenantEntity[]>`
+- `getTenantByID(tenant_id: string): Promise<TenantEntity | null>`
+- `deleteTenant(tenant_id: string): Promise<void>`, which awaits the delete
+
+Rows map to the existing `src/entities/tenant-entity.ts`. The signatures match what `TenantsGrid.astro` and `tenants-actions.ts` already call, so the callers only change how they create `DataStores`.
+
+- *Alternative:* restore the old store from git and convert it. Rejected: it would bring back the empty add/edit stubs and the delete that never runs.
+
+### 3. Astro gets the binding from `cloudflare:workers`
 
 `TenantsGrid.astro` and `tenants-actions.ts` call `tenant_db_lib(env.DB)` with `import { env } from "cloudflare:workers"`. A `wrangler types` script generates `worker-configuration.d.ts` so `env.DB` is typed.
 
 - *Alternative:* `Astro.locals.runtime.env`. That's the older adapter API; the adapter version in use is built around `cloudflare:workers`.
 
-### 3. One D1 database, `tenants-db`, declared in every Wrangler scope
+### 4. One D1 database, `tenants-db`, declared in every Wrangler scope
 
 `tenants-db` already exists in the Cloudflare account. This change only refers to it by `database_id`. `astro-web-platform/wrangler.toml` declares `binding = "DB"`, `database_name`, `database_id`, and `migrations_dir = "../tenants-db-lib/migrations"` at the top level **and** in `[env.development]` and `[env.production]`, because bindings aren't inherited. Development and production share one database, which matches what the Turso setup did. `ASTRO_DB_REMOTE_URL` is removed. `tenants-graphql-api/wrangler.toml` gets the same `DB` binding at the top level (it has no env blocks).
 
 - `database_id` isn't a secret and is committed.
 - *Alternative:* separate dev and prod databases. Deferred: it's easy to add later by changing the IDs in each env block.
 
-### 4. Astro owns D1 operations; Drizzle only generates SQL
+### 5. Astro owns D1 operations; Drizzle only generates SQL
 
 - `drizzle.config.ts` → `dialect: "sqlite"`, `schema`, `out: "./migrations"`, with no credentials and no dotenv. `drizzle-kit generate` needs no database connection.
 - `db:push`, `db:migrate`, `db:studio`, `db:seed`, `db:reset`, `turso:local` are removed from `tenants-db-lib`.
 - `astro-web-platform/package.json` gets `db:migrate:local` / `db:migrate:remote` (`wrangler d1 migrations apply tenants-db --local|--remote`) and `db:seed:local` / `db:seed:remote` (`wrangler d1 execute tenants-db --file ../tenants-db-lib/db/seed.sql`). They run from the Astro package because it has Wrangler as a dependency and holds the binding config. Local D1 state therefore lands in `astro-web-platform/.wrangler/state`, the same place `astro dev` reads from.
 - Wrangler reads only the `.sql` files in `migrations_dir`; Drizzle's `meta/` folder sits beside them and is ignored.
 
-### 5. Squash migrations into one baseline
+### 6. Squash migrations into one baseline
 
 Delete `0000_swift_tarantula.sql`, `0001_tired_skullbuster.sql` and `meta/`, then run `drizzle-kit generate` to produce one fresh migration that creates `tenants` in its current shape. D1 starts empty, so there's no history to keep, and the squash drops `0001`'s `ADD COLUMN ... DEFAULT (CURRENT_TIMESTAMP)`, which SQLite rejects on tables that already have rows.
 
-### 6. SQL seed file replaces `seed.ts`
+### 7. SQL seed file replaces `seed.ts`
 
 `db/seed.sql` inserts the two sample tenants with fixed IDs. It uses `INSERT OR IGNORE` so re-running it is safe. `seed.ts`, `tsx`, `drizzle-seed` and `dotenv` are removed from `tenants-db-lib`.
 

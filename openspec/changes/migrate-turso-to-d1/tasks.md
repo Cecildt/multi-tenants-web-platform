@@ -19,10 +19,11 @@
 ## 3. tenants-db-lib and Astro on the D1 binding
 
 - [ ] 3.1 In `tenants-db-lib`, remove `@libsql/client`, `dotenv`, `drizzle-seed` and `tsx`; add `@cloudflare/workers-types` as a dev dependency and add it to `tsconfig.json` `types`. Verify: `npm install` succeeds and `grep -r libsql src db` returns nothing.
-- [ ] 3.2 Change `src/main.ts` so the default export is `(db: AnyD1Database) => DataStores`, wrapping it with `drizzle(db)` from `drizzle-orm/d1`, and switch `TenantsStore` from `LibSQLDatabase` to `DrizzleD1Database`. Verify: `npm run build` produces `build/bundle.js` and `build/bundle.d.ts` without type errors, and `bundle.d.ts` doesn't import `@libsql/client`.
-- [ ] 3.3 In `astro-web-platform`, update `src/components/grids/TenantsGrid.astro` and `src/actions/tenants-actions.ts` to call `tenant_db_lib(env.DB)` with `import { env } from "cloudflare:workers"`. Verify: `npx astro check` passes.
-- [ ] 3.4 Reinstall the local `tenants-db-lib` dependency in `astro-web-platform` and run `npm run dev` with the seeded local D1. Verify: the tenants grid shows the two seeded tenants, and opening a tenant's details (the `getTenant` action) shows its fields.
-- [ ] 3.5 Update the Database rows in `design-docs/tech-stack.md`: Cloudflare D1 → In use, Turso row removed, `@libsql/client` gone. Verify: `grep -i turso design-docs/tech-stack.md` returns nothing.
+- [ ] 3.2 Create `src/tenants-store.ts` with a `TenantsStore` class that takes `DrizzleD1Database` and has `getTenants` and `getTenantByID` (both returning `TenantEntity`) and `deleteTenant`, which awaits the delete. Verify: `npx tsc --noEmit` passes in `tenants-db-lib`.
+- [ ] 3.3 Change `src/main.ts` so the default export is `(db: AnyD1Database) => DataStores`, wrapping the binding with `drizzle(db)` from `drizzle-orm/d1`, and add a `tenants()` method that returns `new TenantsStore(this.#db)`. Verify: `npm run build` produces `build/bundle.js` and `build/bundle.d.ts` without type errors, and `bundle.d.ts` doesn't import `@libsql/client`.
+- [ ] 3.4 In `astro-web-platform`, update `src/components/grids/TenantsGrid.astro` and `src/actions/tenants-actions.ts` to call `tenant_db_lib(env.DB)` with `import { env } from "cloudflare:workers"`. Verify: `npx astro check` passes.
+- [ ] 3.5 Reinstall the local `tenants-db-lib` dependency in `astro-web-platform` and run `npm run dev` with the seeded local D1. Verify: the tenants grid shows the two seeded tenants, and opening a tenant's details (the `getTenant` action) shows its fields. Deleting a tenant from the grid removes it, and `npx wrangler d1 execute tenants-db --local --command "SELECT COUNT(*) FROM tenants"` returns 1; then re-run `db:seed:local`.
+- [ ] 3.6 Update the Database rows in `design-docs/tech-stack.md`: Cloudflare D1 → In use, Turso row removed, `@libsql/client` gone. Verify: `grep -i turso design-docs/tech-stack.md` returns nothing.
 
 ## 4. Remote deploy
 
