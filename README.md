@@ -22,32 +22,32 @@ A platform to setup and manage  multi-tenants to support multiple web app produc
 
 ## Development
 
-1. Login to Cloudflare and create the D1 database from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+1. Login to Cloudflare and create the D1 database from `astro-web-platform/`:
 
 ```bash
 wrangler login
 wrangler d1 create tenants-db
 ```
 
-2. Whenever you change the schema, generate the SQL migration from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/tenants-db-lib`:
+2. Whenever you change the schema, generate the SQL migration from `tenants-db-lib/`:
 
 ```bash
 npm run db:generate
 ```
 
-3. Apply the migration locally from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+3. Apply the migration locally from `astro-web-platform/`:
 
 ```bash
 npm run db:migrate:local
 ```
 
-4. Seed the local D1 database from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+4. Seed the local D1 database from `astro-web-platform/`:
 
 ```bash
 npm run db:seed:local
 ```
 
-5. When ready, apply the same migration and seed data remotely from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+5. When ready, apply the same migration and seed data remotely from `astro-web-platform/`:
 
 ```bash
 npm run db:migrate:remote
