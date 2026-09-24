@@ -5,7 +5,7 @@ import { actions } from "astro:actions";
 import TenantEditForm from "../../components/forms/TenantEditForm.astro";
 import NavBar from "../../components/menus/NavBar.astro";
 
-import { getTenant, TenantsApiError } from "../../lib/tenants-api";
+import { getTenant } from "../../lib/tenants-api";
 
 const { tenant_id } = Astro.params;
 
@@ -25,15 +25,7 @@ if (result && result.error) {
   tenant_name = data.get("tenant_name")?.toString() || "";
   email = data.get("email")?.toString() || "";
 } else {
-  let tenant;
-  try {
-    tenant = await getTenant(tenant_id ?? "");
-  } catch (err) {
-    if (err instanceof TenantsApiError) {
-      return new Response(null, { status: 404 });
-    }
-    throw err;
-  }
+  const tenant = await getTenant(tenant_id ?? "");
   if (!tenant) {
     return new Response(null, { status: 404 });
   }

@@ -68,13 +68,17 @@ export const tenants = {
     }),
     handler: async ({ tenant_id, business_name, tenant_name, email }) => {
       try {
-        await updateTenant(tenant_id, {
+        const result = await updateTenant(tenant_id, {
           businessName: business_name,
           tenantName: tenant_name,
           email,
         });
+        if (!result) {
+          throw new ActionError({ code: "NOT_FOUND", message: "Tenant not found" });
+        }
         return { tenant_id };
       } catch (err) {
+        if (err instanceof ActionError) throw err;
         handleApiError(err);
       }
     },
