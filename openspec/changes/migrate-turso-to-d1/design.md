@@ -54,7 +54,7 @@ Constraints:
 
 ### 3. One D1 database, `tenants-db`, declared in every Wrangler scope
 
-`wrangler d1 create tenants-db` creates it. `astro-web-platform/wrangler.toml` declares `binding = "DB"`, `database_name`, `database_id`, and `migrations_dir = "../tenants-db-lib/migrations"` at the top level **and** in `[env.development]` and `[env.production]`, because bindings aren't inherited. Development and production share one database, which matches what the Turso setup did. `ASTRO_DB_REMOTE_URL` is removed. `tenants-graphql-api/wrangler.toml` gets the same `DB` binding at the top level (it has no env blocks).
+`tenants-db` already exists in the Cloudflare account. This change only refers to it by `database_id`. `astro-web-platform/wrangler.toml` declares `binding = "DB"`, `database_name`, `database_id`, and `migrations_dir = "../tenants-db-lib/migrations"` at the top level **and** in `[env.development]` and `[env.production]`, because bindings aren't inherited. Development and production share one database, which matches what the Turso setup did. `ASTRO_DB_REMOTE_URL` is removed. `tenants-graphql-api/wrangler.toml` gets the same `DB` binding at the top level (it has no env blocks).
 
 - `database_id` isn't a secret and is committed.
 - *Alternative:* separate dev and prod databases. Deferred: it's easy to add later by changing the IDs in each env block.
@@ -86,7 +86,7 @@ Delete `0000_swift_tarantula.sql`, `0001_tired_skullbuster.sql` and `meta/`, the
 
 ## Migration Plan
 
-1. `wrangler login`, then `wrangler d1 create tenants-db`, and record the `database_id`.
+1. `wrangler login`, then look up the existing `tenants-db`'s `database_id` (Cloudflare dashboard → D1, or `wrangler d1 list`).
 2. Land the code and config changes.
 3. `db:migrate:remote`, then `db:seed:remote`.
 4. `npm run build && npm run deploy` in `astro-web-platform`, then check that the tenants page lists the seeded tenants.

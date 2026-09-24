@@ -10,7 +10,7 @@
 - Remove `@libsql/client` from `tenants-db-lib`, and remove Turso settings from `drizzle.config.ts`, the seed script and the npm scripts (`turso:local`).
 - Replace Drizzle migrations `0000`/`0001` with one baseline migration generated for D1, and apply migrations with Wrangler (`wrangler d1 migrations apply`).
 - Rewrite the seed as a D1 seed: a SQL seed file run with `wrangler d1 execute`, locally and remotely.
-- Create a D1 database and declare it as a `[[d1_databases]]` binding in `astro-web-platform/wrangler.toml`. Remove `ASTRO_DB_REMOTE_URL`.
+- Declare the existing D1 database `tenants-db` as a `[[d1_databases]]` binding in `astro-web-platform/wrangler.toml`. The database already exists in the Cloudflare account, and this change doesn't create it. Remove `ASTRO_DB_REMOTE_URL`.
 - Astro callers (`TenantsGrid.astro`, `tenants-actions.ts`) pass the binding from `cloudflare:workers` into `tenants-db-lib`.
 - Declare the same D1 binding in `tenants-graphql-api/wrangler.toml`. There is no Rust query code in this change.
 - Existing Turso data is **not** migrated. D1 starts empty and is seeded.
@@ -30,6 +30,6 @@ None.
 
 - **Code:** `tenants-db-lib` (`src/main.ts`, `src/tenants-store.ts`, `db/seed.ts`, `drizzle.config.ts`, `migrations/`, `package.json`); `astro-web-platform` (`wrangler.toml`, `src/components/grids/TenantsGrid.astro`, `src/actions/tenants-actions.ts`, `package.json`); `tenants-graphql-api/wrangler.toml`.
 - **Dependencies:** remove `@libsql/client`; add `@cloudflare/workers-types` (dev) to `tenants-db-lib`.
-- **Infrastructure:** a new D1 database in the Cloudflare account. The Turso database `tenants-db` is no longer used and can be deleted separately after the move.
+- **Infrastructure:** uses the existing D1 database `tenants-db`; no new resources are created. The Turso database `tenants-db` is no longer used and can be deleted separately after the move.
 - **Local dev:** `turso dev` is replaced by Wrangler's local D1 (used by `astro dev` on workerd and by `wrangler dev`).
 - **Out of scope, found during planning:** `TenantsStore.deleteTenant` builds a delete query but never awaits or executes it, so deletes don't happen on either backend. This change doesn't fix it; it should be its own change.
