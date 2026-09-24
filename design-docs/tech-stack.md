@@ -26,7 +26,7 @@ Exact versions are tracked in each package's manifest (`package.json`, `Cargo.to
 |---|---|---|
 | Rust | API language | In use (scaffold) |
 | workers-rs (`worker` crate) + worker-build | Run Rust on Cloudflare Workers | In use (scaffold) |
-| GraphQL library | Schema and resolvers | To decide: async-graphql, juniper |
+| GraphQL library | Schema and resolvers | async-graphql |
 
 ## Database (`tenants-db-lib`)
 
@@ -45,7 +45,7 @@ Exact versions are tracked in each package's manifest (`package.json`, `Cargo.to
 | Cloudflare Workers | Hosting for the web app and API | In use |
 | Wrangler | Local dev, deploy, D1 management | In use |
 | Node.js 22 | Runtime for build tooling | In use |
-| Package manager | JavaScript dependency management | To decide: npm, yarn (both present today) |
+| Package manager | JavaScript dependency management | npm |
 | Testing | Unit and integration tests | To decide: Vitest (+ @cloudflare/vitest-pool-workers), cargo test |
 | CI/CD | Build, test, deploy pipeline | To decide: GitHub Actions, Cloudflare Workers Builds |
 
