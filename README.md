@@ -22,46 +22,34 @@ A platform to setup and manage  multi-tenants to support multiple web app produc
 
 ## Development
 
-### Turso
+1. Login to Cloudflare and create the D1 database from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
 
 ```bash
-    turso auth login
+wrangler login
+wrangler d1 create tenants-db
 ```
 
+2. Whenever you change the schema, generate the SQL migration from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/tenants-db-lib`:
+
 ```bash
-    turso db show --url <database-name>
+npm run db:generate
 ```
 
+3. Apply the migration locally from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+
 ```bash
-    turso db tokens create <database-name>
+npm run db:migrate:local
 ```
 
-Whenever you make changes to the schema, run db:generate:
+4. Seed the local D1 database from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
 
 ```bash
-    npm run db:generate
+npm run db:seed:local
 ```
 
-Now apply these changes to the database with db:migrate:
+5. When ready, apply the same migration and seed data remotely from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
 
 ```bash
-    npm run db:migrate
-```
-
-To apply the seed data to the database, run db:seed:
-
-```bash
-    npm run db:seed
-```
-
-To apply db schema changes quickly, run db:push:
-
-```bash
-    npm run db:push
-```
-
-To reset the database, run db:reset:
-
-```bash
-    npm run db:reset
+npm run db:migrate:remote
+npm run db:seed:remote
 ```

@@ -33,10 +33,9 @@ Exact versions are tracked in each package's manifest (`package.json`, `Cargo.to
 | Technology | Purpose | Status |
 |---|---|---|
 | Drizzle ORM + drizzle-kit | Schema, queries, migrations | In use |
-| drizzle-seed + tsx | Seed data scripts | In use |
+| Wrangler D1 commands + SQL seed file | Apply migrations and seed data locally/remotely | In use |
 | Parcel | Builds the library bundle | In use |
-| Turso (libSQL) | Database storage | In use, being replaced by D1 |
-| Cloudflare D1 | Database storage, shared by the Astro and Rust Workers via bindings | Planned |
+| Cloudflare D1 | Database storage, shared by the Astro and Rust Workers via bindings | In use |
 
 ## Platform & Tooling
 

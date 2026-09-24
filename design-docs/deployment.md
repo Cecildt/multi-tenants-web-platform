@@ -6,16 +6,45 @@ Cloudflare Workers is a serverless platform that enables developers to deploy co
 
 ## Deployment Process
 
-1. **Install Wrangler**: Wrangler is a CLI tool that makes it easy to develop, build, and deploy Cloudflare Workers. You can install Wrangler using npm:
+1. **Install Wrangler**:
 
    ```bash
-   npm install -g @cloudflare/wrangler
+   npm install -g wrangler
    ```
 
-2. **Login to Cloudflare**: Before you can deploy a Worker, you need to login to your Cloudflare account using Wrangler:
+2. **Login to Cloudflare**:
 
    ```bash
-    wrangler login
-    ```
+   wrangler login
+   ```
 
-TBD
+3. **Create the D1 database** from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+
+   ```bash
+   wrangler d1 create tenants-db
+   ```
+
+4. **Generate the latest SQL migration** from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/tenants-db-lib`:
+
+   ```bash
+   npm run db:generate
+   ```
+
+5. **Apply the migration remotely** from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+
+   ```bash
+   npm run db:migrate:remote
+   ```
+
+6. **Seed the remote database** from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+
+   ```bash
+   npm run db:seed:remote
+   ```
+
+7. **Build and deploy** from `/home/runner/work/multi-tenants-web-platform/multi-tenants-web-platform/astro-web-platform`:
+
+   ```bash
+   npm run build
+   npm run deploy
+   ```

@@ -3,10 +3,30 @@ main = "@astrojs/cloudflare/entrypoints/server"
 compatibility_date = "2025-01-19"
 compatibility_flags = [ "nodejs_compat" ]
 
+[[d1_databases]]
+binding = "DB"
+database_name = "tenants-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "../tenants-db-lib/migrations"
+
 [env.development.vars]
-ASTRO_DB_REMOTE_URL = "libsql://tenants-db-cecildt.turso.io"
 NODE_VERSION = "22.13.0"
 
+[env.development]
+# D1 bindings are not inherited into named environments.
+[[env.development.d1_databases]]
+binding = "DB"
+database_name = "tenants-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "../tenants-db-lib/migrations"
+
 [env.production.vars]
-ASTRO_DB_REMOTE_URL = "libsql://tenants-db-cecildt.turso.io"
 NODE_VERSION = "22.13.0"
+
+[env.production]
+# D1 bindings are not inherited into named environments.
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "tenants-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "../tenants-db-lib/migrations"

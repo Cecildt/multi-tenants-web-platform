@@ -2,9 +2,10 @@
 import TenantDeleteDialog from "../dialogs/TenantDeleteDialog.astro";
 import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
 
+import { env } from "cloudflare:workers";
 import tenant_db_lib from "tenants-db-lib";
 
-const data_stores = tenant_db_lib();
+const data_stores = tenant_db_lib(env.DB);
 let tenants = await data_stores.tenants().getTenants();
 ---
 

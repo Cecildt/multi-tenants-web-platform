@@ -1,12 +1,12 @@
 import { TenantEntity } from "./entities/tenant-entity";
 import { tenantsTable } from "../db/schema";
 import { eq } from "drizzle-orm";
-import { LibSQLDatabase } from "drizzle-orm/libsql";
+import { DrizzleD1Database } from "drizzle-orm/d1";
 
 export class TenantsStore {
-  #db: LibSQLDatabase;
+  #db: DrizzleD1Database;
 
-  constructor(db: LibSQLDatabase) {
+  constructor(db: DrizzleD1Database) {
     this.#db = db;
   }
 

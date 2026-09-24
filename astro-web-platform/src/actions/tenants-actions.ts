@@ -1,5 +1,6 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import { env } from "cloudflare:workers";
 import { nanoid } from "nanoid";
 
 import tenant_db_lib from "tenants-db-lib";
@@ -71,7 +72,7 @@ export const tenants = {
     handler: async ({ tenant_id }) => {
       console.log("Delete tenant: ", tenant_id);
 
-      const data_stores = tenant_db_lib();
+      const data_stores = tenant_db_lib(env.DB);
       await data_stores.tenants().deleteTenant(tenant_id);
 
       return { tenant_id: tenant_id };
@@ -85,7 +86,7 @@ export const tenants = {
     handler: async ({ tenant_id }) => {
       console.log("Get tenant: ", tenant_id);
 
-      const data_stores = tenant_db_lib();
+      const data_stores = tenant_db_lib(env.DB);
       let tenant = await data_stores.tenants().getTenantByID(tenant_id);
 
 
