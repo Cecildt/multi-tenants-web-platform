@@ -24,21 +24,30 @@ Cloudflare Workers is a serverless platform that enables developers to deploy co
    wrangler d1 list
    ```
 
-   Copy the `database_id` into the `DATABASE_ID` placeholder in `astro-web-platform/wrangler.toml` (all three occurrences: top level, `[env.development]`, and `[env.production]`).
+   Copy the `database_id` into the `DATABASE_ID` placeholder in `tenants-graphql-api/wrangler.toml`.
 
-4. **Apply database migrations** (run in `astro-web-platform`):
+4. **Apply database migrations** (run in `tenants-graphql-api`):
 
    ```bash
+   npm install
    npm run db:migrate:remote
    ```
 
-5. **Seed the database** (run in `astro-web-platform`):
+5. **Seed the database** (run in `tenants-graphql-api`):
 
    ```bash
    npm run db:seed:remote
    ```
 
-6. **Build and deploy** (run in `astro-web-platform`):
+6. **Deploy the GraphQL API first** (run in `tenants-graphql-api`):
+
+   ```bash
+   npm run deploy
+   ```
+
+   The API must be deployed before Astro because the `TENANTS_API` service binding will fail to resolve if the Worker doesn't exist yet.
+
+7. **Deploy the Astro web app** (run in `astro-web-platform`):
 
    ```bash
    npm run build && npm run deploy

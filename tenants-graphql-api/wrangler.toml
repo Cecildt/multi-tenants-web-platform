@@ -1,12 +1,15 @@
 name = "tenants-graphql-api"
 main = "build/index.js"
 compatibility_date = "2026-09-10"
+workers_dev = false
+preview_urls = false
 
 [[d1_databases]]
 binding = "DB"
 database_name = "tenants-db"
 # TODO: replace DATABASE_ID with the actual ID from `wrangler d1 list`
 database_id = "DATABASE_ID"
+migrations_dir = "../tenants-db-lib/migrations"
 
 [build]
 command = "cargo install -q \"worker-build@^0.8\" && worker-build --release"
