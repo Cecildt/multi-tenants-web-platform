@@ -1,10 +1,6 @@
 import { drizzle, LibSQLDatabase } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 
-import { ProductsStore } from "./products-store";
-import { TenantsStore } from "./tenants-store";
-import { UsersStore } from "./users-store";
-
 class DataStores {
 	#db: LibSQLDatabase;
 
@@ -17,20 +13,8 @@ class DataStores {
 		  this.#db = drizzle(turso);
 	}
 
-	tenants() {
-		return new TenantsStore(this.#db);
-	}
-
-	products() {
-		return new ProductsStore();
-	}
-
-	users() {
-		return new UsersStore();
-	}
 }
 
 export default function () {
 	return new DataStores();
 }
-
