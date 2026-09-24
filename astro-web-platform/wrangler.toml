@@ -7,6 +7,7 @@ compatibility_flags = [ "nodejs_compat" ]
 [[d1_databases]]
 binding = "DB"
 database_name = "tenants-db"
+# TODO: replace DATABASE_ID with the actual ID from `wrangler d1 list`
 database_id = "DATABASE_ID"
 migrations_dir = "../tenants-db-lib/migrations"
 
@@ -18,6 +19,7 @@ NODE_VERSION = "22.13.0"
 [[env.development.d1_databases]]
 binding = "DB"
 database_name = "tenants-db"
+# TODO: replace DATABASE_ID with the actual ID from `wrangler d1 list`
 database_id = "DATABASE_ID"
 migrations_dir = "../tenants-db-lib/migrations"
 
@@ -29,5 +31,6 @@ NODE_VERSION = "22.13.0"
 [[env.production.d1_databases]]
 binding = "DB"
 database_name = "tenants-db"
+# TODO: replace DATABASE_ID with the actual ID from `wrangler d1 list`
 database_id = "DATABASE_ID"
 migrations_dir = "../tenants-db-lib/migrations"
