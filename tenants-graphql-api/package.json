@@ -1,0 +1,15 @@
+{
+  "name": "tenants-graphql-api",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply tenants-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply tenants-db --remote",
+    "db:seed:local": "wrangler d1 execute tenants-db --local --file ../tenants-db-lib/db/seed.sql",
+    "db:seed:remote": "wrangler d1 execute tenants-db --remote --file ../tenants-db-lib/db/seed.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.0"
+  }
+}

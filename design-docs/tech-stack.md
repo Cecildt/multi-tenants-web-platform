@@ -26,7 +26,7 @@ Exact versions are tracked in each package's manifest (`package.json`, `Cargo.to
 |---|---|---|
 | Rust | API language | In use (scaffold) |
 | workers-rs (`worker` crate) + worker-build | Run Rust on Cloudflare Workers | In use (scaffold) |
-| GraphQL library | Schema and resolvers | async-graphql |
+| GraphQL library | Schema and resolvers | async-graphql | In use |
 
 ## Database (`tenants-db-lib`)
 

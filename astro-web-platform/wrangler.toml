@@ -4,33 +4,24 @@ compatibility_date = "2025-01-19"
 compatibility_flags = [ "nodejs_compat" ]
 
 # Bindings are not inherited by env blocks; repeat them in each env below.
-[[d1_databases]]
-binding = "DB"
-database_name = "tenants-db"
-# TODO: replace DATABASE_ID with the actual ID from `wrangler d1 list`
-database_id = "DATABASE_ID"
-migrations_dir = "../tenants-db-lib/migrations"
+[[services]]
+binding = "TENANTS_API"
+service = "tenants-graphql-api"
 
 # Development environment
 # Bindings must be re-declared here because they are not inherited from the top level.
 [env.development.vars]
 NODE_VERSION = "22.13.0"
 
-[[env.development.d1_databases]]
-binding = "DB"
-database_name = "tenants-db"
-# TODO: replace DATABASE_ID with the actual ID from `wrangler d1 list`
-database_id = "DATABASE_ID"
-migrations_dir = "../tenants-db-lib/migrations"
+[[env.development.services]]
+binding = "TENANTS_API"
+service = "tenants-graphql-api"
 
 # Production environment
 # Bindings must be re-declared here because they are not inherited from the top level.
 [env.production.vars]
 NODE_VERSION = "22.13.0"
 
-[[env.production.d1_databases]]
-binding = "DB"
-database_name = "tenants-db"
-# TODO: replace DATABASE_ID with the actual ID from `wrangler d1 list`
-database_id = "DATABASE_ID"
-migrations_dir = "../tenants-db-lib/migrations"
+[[env.production.services]]
+binding = "TENANTS_API"
+service = "tenants-graphql-api"

@@ -8,24 +8,19 @@
     "preview": "astro preview",
     "deploy": "wrangler deploy",
     "astro": "astro",
-    "cf-typegen": "wrangler types",
-    "db:migrate:local": "wrangler d1 migrations apply tenants-db --local",
-    "db:migrate:remote": "wrangler d1 migrations apply tenants-db --remote",
-    "db:seed:local": "wrangler d1 execute tenants-db --local --file ../tenants-db-lib/db/seed.sql",
-    "db:seed:remote": "wrangler d1 execute tenants-db --remote --file ../tenants-db-lib/db/seed.sql"
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.1",
-    "astro": "^7.3.2",
-    "dotenv": "^17.4.2",
-    "nanoid": "^6.0.1",
-    "tenants-db-lib": "file:../tenants-db-lib"
+    "astro": "^7.3.2"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "daisyui": "^5.7.34",
     "tailwindcss": "^4.3.3",
+    "typescript": "6",
     "wrangler": "^4.131.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"

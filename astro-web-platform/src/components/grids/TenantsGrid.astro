@@ -2,70 +2,81 @@
 import TenantDeleteDialog from "../dialogs/TenantDeleteDialog.astro";
 import TenantDetailsDialog from "../dialogs/TenantDetailsDialog.astro";
 
-import { env } from "cloudflare:workers";
-import tenant_db_lib from "tenants-db-lib";
+import { listTenants } from "../../lib/tenants-api";
 
-const data_stores = tenant_db_lib(env.DB);
-let tenants = await data_stores.tenants().getTenants();
+let tenants: Awaited<ReturnType<typeof listTenants>> = [];
+let listError = false;
+
+try {
+  tenants = await listTenants();
+} catch {
+  listError = true;
+}
 ---
 
 <div class="overflow-x-auto">
-  <table class="table w-11/12">
-    <!-- head -->
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Business Name</th>
-        <th>Tenant Name</th>
-        <th>Email</th>
-        <th>Created Date</th>
-        <th>Updated Date</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        tenants.map((tenant) => (
+  {
+    listError ? (
+      <div role="alert" class="alert alert-error">
+        <span>Failed to load tenants. Please try again later.</span>
+      </div>
+    ) : (
+      <table class="table w-11/12">
+        <!-- head -->
+        <thead>
           <tr>
-            <td>{tenant.tenant_id}</td>
-            <td>{tenant.business_name}</td>
-            <td>{tenant.tenant_name}</td>
-            <td>{tenant.email}</td>
-            <td>{tenant.created_timestamp.toISOString()}</td>
-            <td>{tenant.updated_timestamp.toISOString()}</td>
-            <td>
-              <button
-                class="btn btn-info btn-xs mt-btn-tenant-details"
-                onclick="tenantDetailsDialog.showModal()"
-                data-tenant-id={tenant.tenant_id}
-              >
-                Details
-              </button>
-            </td>
-            <td>
-              <a
-                class="btn btn-warning btn-xs"
-                href="/tenants/{tenant.tenant_id}"
-              >
-                Edit
-              </a>
-            </td>
-            <td>
-              <button
-                class="btn btn-error btn-xs mt-btn-tenant-delete"
-                onclick="tenantDeleteDialog.showModal()"
-                data-tenant-id={tenant.tenant_id}
-              >
-                Delete
-              </button>
-            </td>
+            <th>ID</th>
+            <th>Business Name</th>
+            <th>Tenant Name</th>
+            <th>Email</th>
+            <th>Created Date</th>
+            <th>Updated Date</th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
-        ))
-      }
-    </tbody>
-  </table>
+        </thead>
+        <tbody>
+          {tenants.map((tenant) => (
+            <tr>
+              <td>{tenant.tenantId}</td>
+              <td>{tenant.businessName}</td>
+              <td>{tenant.tenantName}</td>
+              <td>{tenant.email}</td>
+              <td>{tenant.createdAt}</td>
+              <td>{tenant.updatedAt}</td>
+              <td>
+                <button
+                  class="btn btn-info btn-xs mt-btn-tenant-details"
+                  onclick="tenantDetailsDialog.showModal()"
+                  data-tenant-id={tenant.tenantId}
+                >
+                  Details
+                </button>
+              </td>
+              <td>
+                <a
+                  class="btn btn-warning btn-xs"
+                  href={`/tenants/${tenant.tenantId}`}
+                >
+                  Edit
+                </a>
+              </td>
+              <td>
+                <button
+                  class="btn btn-error btn-xs mt-btn-tenant-delete"
+                  onclick="tenantDeleteDialog.showModal()"
+                  data-tenant-id={tenant.tenantId}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
+  }
 </div>
 <!-- dialogs -->
 <TenantDetailsDialog />
@@ -84,7 +95,7 @@ let tenants = await data_stores.tenants().getTenants();
       if (tenantInput) {
         tenantInput.value = tenantId ?? "unknown";
       }
-      const { data, error } = await actions.tenants.getTenant({
+      const { data } = await actions.tenants.getTenant({
         tenant_id: tenantId ?? "unknown",
       });
 
@@ -98,8 +109,9 @@ let tenants = await data_stores.tenants().getTenants();
       document.getElementById("tenant_details_email")!.textContent =
         data?.email ?? "unknown";
       document.getElementById("tenant_details_created")!.textContent =
-        data?.created_at.toString() ?? "unknown";
-      document.getElementById("tenant_details_updated")!.textContent = data?.updated_at.toString() ?? "unknown";
+        data?.created_at?.toString() ?? "unknown";
+      document.getElementById("tenant_details_updated")!.textContent =
+        data?.updated_at?.toString() ?? "unknown";
     });
   });
 
@@ -114,7 +126,7 @@ let tenants = await data_stores.tenants().getTenants();
         tenantInput.value = tenantId ?? "unknown";
       }
 
-      const { data, error } = await actions.tenants.getTenant({
+      const { data } = await actions.tenants.getTenant({
         tenant_id: tenantId ?? "unknown",
       });
 
