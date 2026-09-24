@@ -24,25 +24,19 @@ Cloudflare Workers is a serverless platform that enables developers to deploy co
    wrangler d1 create tenants-db
    ```
 
-4. **Generate the latest SQL migration** from `tenants-db-lib/`:
-
-   ```bash
-   npm run db:generate
-   ```
-
-5. **Apply the migration remotely** from `astro-web-platform/`:
+4. **Apply the committed migration remotely** from `astro-web-platform/`:
 
    ```bash
    npm run db:migrate:remote
    ```
 
-6. **Seed the remote database** from `astro-web-platform/`:
+5. **Seed the remote database** from `astro-web-platform/`:
 
    ```bash
    npm run db:seed:remote
    ```
 
-7. **Build and deploy** from `astro-web-platform/`:
+6. **Build and deploy** from `astro-web-platform/`:
 
    ```bash
    npm run build
