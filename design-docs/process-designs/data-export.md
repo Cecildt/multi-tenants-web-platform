@@ -8,8 +8,19 @@ Data Export process is about an account holder requesting the export of all thei
 
 ## Process Flow
 
-```mermaid
+High-level process
 
+```mermaid
+flowchart LR
+
+```
+
+Detailed sequence diagram
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor Customer
 
 ```
 

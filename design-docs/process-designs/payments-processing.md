@@ -8,11 +8,21 @@ Payments processing is about the monthly or yearly payments processing for acces
 
 ## Process Flow
 
-```mermaid
+High-level process
 
+```mermaid
+flowchart LR
 
 ```
 
+Detailed sequence diagram
+
+```mermaid
+sequenceDiagram
+  autonumber
+  actor Customer
+
+```
 ## Post-conditions
 
 - TBD
