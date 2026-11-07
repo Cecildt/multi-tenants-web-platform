@@ -8,45 +8,42 @@ Registration Onboarding process is about signing up to use the system.
 
 ## Process Flows
 
-```mermaid
-journey
-    title Registration Onboarding Journey 
-    section Sign-up
-      Input Basic Information: 5: Account Holder
-      Create Instance: 5: System
-    section Review Instance Setup
-      Setup preferences: 5: Account Holder
-      Create first case: 5: Account Holder
-
-```
+High-level process
 
 ```mermaid
 flowchart LR
-  subgraph Client
+  subgraph Customer
     Signup[Sign-up]
     Instance[Instance Creation]
+    Email[Email Confirmation]
   end
-  Signup-->Instance
+  Signup-->Instance-->Email
 ```
+
+Detailed sequence diagram
 
 ```mermaid
 sequenceDiagram
   autonumber
   actor Customer
-  participant Home as Home page
-  participant SignUp as Sign-up page
-  participant Bank
+  box MediationHub Application
+    participant Home as Home page
+    participant SignUp as Sign-up page
+    participant Landing as Landing page
+    participant MediationHub as Backend API System
+  end
+  participant Tenants as Tenants API System
+  participant Email as Email System
+  
   Customer->>Home: Click Sign-up button
   Home->>SignUp: Provide basic information
-  activate API
-  API->>Bank: Authorise payment
-  Bank-->>API: Approved
-  API-->>Web: 201 Created
-  deactivate API
-  Web-->>Customer: Order confirmed
-  Note over Customer,Bank: One order, one transaction
-
-
+  SignUp->>Tenants: Record customer information
+  Tenants->>MediationHub: Request tenant creation
+  MediationHub->>Tenants: Tenant instance created.
+  Tenants-->>Email: Request email confirmation
+  Email-->>Customer: Sent email confirmation
+  Tenants->>Landing: Redirect to Tenant instance
+  
 ```
 
 ## Post-conditions
