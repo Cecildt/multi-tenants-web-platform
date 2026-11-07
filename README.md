@@ -20,6 +20,8 @@ A platform to setup and manage  multi-tenants to support multiple web app produc
 - [Security](./design-docs/security.md)
 - [Deployment](./design-docs/deployment.md)
 
+Claude HTML page Artifact: https://claude.ai/artifact/HntQxJapHHgC3KbjXqik4g
+
 ## Development
 
 ### D1 Database
