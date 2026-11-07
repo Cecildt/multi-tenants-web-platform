@@ -6,3 +6,4 @@ The following list the processes that must be supported in the product system.
 - [Payments Processing](./payments-processing.md)
 - [Data Export](./data-export.md)
 - [Account Closure](./account-closure.md)
+- [Account Lock](./account-lock.md)
