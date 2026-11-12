@@ -8,8 +8,8 @@ authors = ["cecil <cecildt@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-worker = { version = "0.8", features = ['http', 'd1'] }
-worker-macros = { version = "0.8", features = ['http'] }
+worker = { version = "0.9", features = ['http', 'd1'] }
+worker-macros = { version = "0.9", features = ['http'] }
 http = "1.3"
 http-body-util = "0.1"
 async-graphql = { version = "7", default-features = false }
