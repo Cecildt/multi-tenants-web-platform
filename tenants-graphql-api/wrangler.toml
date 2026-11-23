@@ -12,4 +12,4 @@ database_id = "DATABASE_ID"
 migrations_dir = "../tenants-db-lib/migrations"
 
 [build]
-command = "cargo install -q \"worker-build@^0.8\" && worker-build --release"
+command = "cargo install -q \"worker-build@^0.9\" && worker-build --release"

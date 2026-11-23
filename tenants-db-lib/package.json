@@ -16,14 +16,14 @@
     "db:generate": "drizzle-kit generate"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20261112.1",
+    "@cloudflare/workers-types": "^5.20261123.1",
     "@parcel/packager-ts": "^2.16.4",
     "@parcel/transformer-typescript-types": "^2.16.4",
-    "@types/node": "^22.20.5",
+    "@types/node": "^24.19.2",
     "drizzle-kit": "^0.31.11",
     "parcel": "^2.16.4",
     "tslib": "^2.9.1",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "files": [
     "build/bundle.d.ts",
